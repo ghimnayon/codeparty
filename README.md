@@ -35,17 +35,3 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## .env.local
-NEXT_PUBLIC_FIREBASE_API_KEY = AIzaSyCnW-J_9FXabD5wLwv7YEJO0kKtQBmkHlc
-
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN = codeparty-849d7.firebaseapp.com
-
-NEXT_PUBLIC_FIREBASE_PROJECT_ID = codeparty-849d7
-
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET = codeparty-849d7.appspot.com
-
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID = 930033500563
-
-NEXT_PUBLIC_FIREBASE_APP_ID = 1:930033500563:web:ccd7612b72d20584096866
-
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID = G-T864SFVJZZ
