@@ -143,31 +143,50 @@ export default function Home() {
   };
   // console.log(createTableRows(schedule_temp));
   return (
-    <div className="h-full w-4/5 mx-auto flex">
-      <div className="w-2/3">
-        <div className="h-64 bg-red-300">
-          Top Section
+    <div className="w-4/5 h-full mx-auto flex flex-col">
+      <div class="h-12 bg-blue-500 flex justify-between items-center">
+        <div class="flex items-center">
+            {/* Banner Placeholder */}
+            <img src="https://storage.googleapis.com/static.fastcampus.co.kr/prod/uploads/202307/080059-490/red-s-3-web.png" alt="Banner Image" class="h-8 w-8 rounded-full"/>
         </div>
-        <div className="overflow-y-auto bg-blue-300">  
-          <table className="w-full border-collapse border">
-            <thead>
-              <tr className="bg-gray-200">
-                {createTableHeaders(schedule_temp)}
-              </tr>
-            </thead>
-            <tbody>
-              {createTableRows(schedule_temp)}
-            </tbody>
+        {/* Username Placeholder */}
+        <span class="ml-2">김진중</span>
+        {/* Login/Logout Icon Placeholder */}
+        <span class="mr-2">🔒</span>
+      </div>
+      {/* Search Part */}
+      <div class="h-1/4 bg-white p-4">
+          {/* Search Window Placeholder */}
+          <input type="text" placeholder="어디로 떠나고 싶으세요?" class="w-1/5 p-2 border rounded"/>
+          {/* Date Picker Placeholder */}
+          <input type="date" class="w-1/5 p-2 mt-2 border rounded"/>
+          <input type="date" class="w-1/5 p-2 mt-2 border rounded"/>
+          {/* Dropdown List Placeholder */}
+          <select class="w-1/5 p-2 mt-2 border rounded">
+              <option value="option1">1</option>
+              <option value="option2">2</option>
+          </select>
+      </div>
+      <div class="flex h-3/4 bg-gray-200 p-4">
+        <div class="w-3/5 pr-4">
+          {/* Table Placeholder (populate with your schedule data) */}
+          <table class="w-3/5 border-collapse border">
+              <thead>
+                <tr className="bg-gray-200">
+                  {createTableHeaders(schedule_temp)}
+                </tr>
+              </thead>
+              <tbody>
+                {createTableRows(schedule_temp)}
+              </tbody>
           </table>
         </div>
-      </div>
-      <div className="w-1/3 bg-green-300">
-        <img src="https://via.placeholder.com/300" alt="Sample Image" className="w-full h-full object-cover"/>
+
+        <div class="w-2/5 bg-gray-300 p-4">
+          {/* Chat Placeholder (populate with your schedule data) */}
+          TBD(evloped!)
+        </div>
       </div>
     </div>
-
-
-
-    
   );
 }
