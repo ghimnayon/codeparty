@@ -144,9 +144,9 @@ export default function Home() {
   };
   */
   return (
-    <div className="w-4/5 h-screen mx-auto flex flex-col">
-      <div className="h-12 bg-blue-500 flex justify-between items-center">
-        <div className="flex items-center">
+    <div className="w-4/5 h-screen mx-auto flex flex-col overflow-hidden">
+      <div className="h-12 bg-blue-500 flex justify-between items-center overflow-hidden">
+        <div className="flex items-center overflow-hidden">
             {/* Banner Placeholder */}
             <img src="https://storage.googleapis.com/static.fastcampus.co.kr/prod/uploads/202307/080059-490/red-s-3-web.png" alt="Banner Image" className="h-8 w-8 rounded-full"/>
         </div>
@@ -156,7 +156,7 @@ export default function Home() {
         <span className="mr-2">🔒</span>
       </div>
       {/* Search Part */}
-      <div className="h-1/4 bg-white p-4">
+      <div className="h-1/4 bg-white p-4 overflow-hidden">
           {/* Search Window Placeholder */}
           <input type="text" placeholder="어디로 떠나고 싶으세요?" className="w-1/5 p-2 border rounded"/>
           {/* Date Picker Placeholder */}
@@ -169,11 +169,58 @@ export default function Home() {
           </select>
       </div>
       <div className="flex h-3/4 bg-gray-200 p-4 overflow-hidden">
+        {/* Schedule Placeholder */}
+        <div className="w-2/3 h-full pr-4 overflow-auto">
+          <div class="container mx-auto">
+            <div class="bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer" onclick="toggleSchedule('day1')">
+              <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-semibold">Day 1: 2024-05-01</h2>
+                    <p>Main Destination: Destination A</p>
+                </div>
+                <div>
+                    <p>Destinations: 3</p>
+                    <p>Total Cost: $150</p>
+                </div>
+              </div>
+              <div id="day1" class="mt-4">
+                <div class="mb-4">
+                  <p><strong>Time:</strong> 09:00 AM</p>
+                  <p><strong>Destination:</strong> Destination A <span class="hover-address" data-address="123 Main St, City">📍</span></p>
+                  <p><strong>Content:</strong> Visit to museum</p>
+                  <p><strong>Cost:</strong> $50</p>
+                  <p><strong>Duration:</strong> 2 hours</p>
+                  <div class="h-16 bg-gray-300 mt-2" onclick="openImage('image1')">Image Placeholder</div>
+                </div>
+                <div class="mb-4">
+                  <p><strong>Time:</strong> 12:00 PM</p>
+                  <p><strong>Destination:</strong> Destination B <span class="hover-address" data-address="456 Elm St, City">📍</span></p>
+                  <p><strong>Content:</strong> Lunch at local restaurant</p>
+                  <p><strong>Cost:</strong> $30</p>
+                  <p><strong>Duration:</strong> 1 hour</p>
+                  <div class="h-16 bg-gray-300 mt-2" onclick="openImage('image2')">Image Placeholder</div>
+                </div>
+                <div class="mb-4">
+                  <p><strong>Time:</strong> 02:00 PM</p>
+                  <p><strong>Destination:</strong> Destination C <span class="hover-address" data-address="789 Pine St, City">📍</span></p>
+                  <p><strong>Content:</strong> Afternoon hike</p>
+                  <p><strong>Cost:</strong> $70</p>
+                  <p><strong>Duration:</strong> 3 hours</p>
+                  <div class="h-16 bg-gray-300 mt-2" onclick="openImage('image3')">Image Placeholder</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        {/* Table Placeholder (populate with your schedule data) */}
-        <div className="w-3/4 pr-4 overflow-auto">
-          <table className="table-auto">
-              <thead>
+          <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
+            <div class="relative">
+              <button onclick="closeImage()" class="absolute top-0 right-0 m-4 text-white text-2xl">×</button>
+              <img id="modalImage" src="" alt="Large view" class="max-w-full max-h-full"/>
+            </div>
+          </div>
+
+          <table className="table-auto invisible">
+              <thead className="sticky top-0">
                 <tr className="bg-gray-200">
                   {createTableHeaders(schedule_temp)}
                 </tr>
@@ -185,24 +232,20 @@ export default function Home() {
         </div>
 
         {/* Chat Placeholder */}
-        <div className="w-1/4 bg-gray-300 p-4">
-          <div className="flex-1 sm:px-10 pb-4 sm:pb-10">
-            <div className="mx-auto mt-4 sm:mt-12">
-              {/*
-                메인 채팅 컴포넌트
-                messages: 메시지 목록
-                loading: 메시지 전송 중인지 여부
-                onSendMessage: 메시지 전송 함수
-              */}
-              <Chat
-                messages={messages}
-                loading={loading}
-                onSendMessage={handleSend}
-              />
-              {/* 메시지 목록의 끝으로 스크롤하기 위해 참조하는 엘리먼트 */}
-              {/*  <div ref={messagesEndRef} /> */}
-            </div>
-          </div>
+        <div className="w-1/3 h-full bg-gray-300 p-2 overflow-hidden">
+          {/*
+            메인 채팅 컴포넌트
+            messages: 메시지 목록
+            loading: 메시지 전송 중인지 여부
+            onSendMessage: 메시지 전송 함수
+          */}
+          <Chat
+            messages={messages}
+            loading={loading}
+            onSendMessage={handleSend}
+          />
+          {/* 메시지 목록의 끝으로 스크롤하기 위해 참조하는 엘리먼트 */}
+          {/*  <div ref={messagesEndRef} /> */}
         </div>
       </div>
     </div>

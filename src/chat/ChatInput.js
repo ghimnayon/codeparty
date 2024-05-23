@@ -47,7 +47,7 @@ export const ChatInput = ({ onSendMessage }) => {
   }, [content]);
 
   return (
-    <div className="relative">
+    <div>
       <textarea
         ref={textareaRef}
         className="min-h-[44px] rounded-lg pl-4 pr-12 py-2 w-full focus:outline-none focus:ring-1 focus:ring-neutral-300 border-2 border-neutral-200"
