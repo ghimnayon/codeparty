@@ -18,7 +18,7 @@ function createTableHeaders(scheduleData) {
 function createDayRows(day) {
   const headerList = Object.keys(day);
   return headerList.map((header, index) => 
-    <td className="border px-4 py-2">{day[header]}</td>
+    <td className="border px-4 py-2 text-black">{day[header]}</td>
   );
 }
 
@@ -158,17 +158,17 @@ export default function Home() {
       {/* Search Part */}
       <div className="h-1/4 bg-white p-4">
           {/* Search Window Placeholder */}
-          <input type="text" placeholder="어디로 떠나고 싶으세요?" className="w-1/5 p-2 border rounded"/>
+          <input type="text" placeholder="어디로 떠나고 싶으세요?" className="w-1/5 p-2 border rounded text-black"/>
           {/* Date Picker Placeholder */}
-          <input type="date" className="w-1/5 p-2 mt-2 border rounded"/>
-          <input type="date" className="w-1/5 p-2 mt-2 border rounded"/>
+          <input type="date" className="w-1/5 p-2 mt-2 border rounded text-black"/>
+          <input type="date" className="w-1/5 p-2 mt-2 border rounded text-black"/>
           {/* Dropdown List Placeholder */}
-          <select className="w-1/5 p-2 mt-2 border rounded">
+          <select className="w-1/5 p-2 mt-2 border rounded text-black">
               <option value="option1">1</option>
               <option value="option2">2</option>
           </select>
       </div>
-      <div className="flex h-3/4 bg-gray-200 p-4 overflow-hidden">
+      <div className="flex h-3/4 bg-gray-200 p-4 overflow-hidden text-black">
 
         {/* Table Placeholder (populate with your schedule data) */}
         <div className="w-3/4 pr-4 overflow-auto">
