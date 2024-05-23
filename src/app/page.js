@@ -2,7 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Chat } from "@/chat/Chat";
-
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 function createTableHeaders(scheduleData) {
   if (scheduleData.schedule){
@@ -18,7 +23,7 @@ function createTableHeaders(scheduleData) {
 function createDayRows(day) {
   const headerList = Object.keys(day);
   return headerList.map((header, index) => 
-    <td className="border px-4 py-2 text-black">{day[header]}</td>
+    <td key={index} className="border px-4 py-2 text-black">{day[header]}</td>
   );
 }
 
@@ -34,6 +39,21 @@ function createTableRows(scheduleData) {
 };
 
 export default function Home() {
+
+  //여행 인원 설정
+  const [count, setCount] = useState(1);
+  const [displayCount, setDisplayCount] = useState("인원");
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+  const decrement = () => {
+    setCount(count > 1 ? count - 1 : 1);
+  };
+
+  const applyCount = () => {
+    setDisplayCount(`인원: ${count}명`);
+  };
   
   const schedule_temp = {
   schedule: [
@@ -41,7 +61,7 @@ export default function Home() {
       "date": "1일차",
       "time": "오전 9시",
       "dest": "해운대 해수욕장",
-      "content": "해운대 해수욕장에서 모래사장에서 여유로운 시간을 보내며 해수욕을 즐기세요.",
+      //"content": "해운대 해수욕장에서 모래사장에서 여유로운 시간을 보내며 해수욕을 즐기세요.",
       "addr": "부산광역시 해운대구 해운대해수욕장로 25",
       "cost": "무료",
       "duration": "2시간"
@@ -50,7 +70,7 @@ export default function Home() {
       "date": "1일차",
       "time": "오전 11시",
       "dest": "해운대 시장",
-      "content": "해운대 시장에서 다양한 해산물과 부산 음식을 맛보세요.",
+      //"content": "해운대 시장에서 다양한 해산물과 부산 음식을 맛보세요.",
       "addr": "부산광역시 해운대구 해운대동 14-1",
       "cost": "저녁 식사 비용 1인당 2만원",
       "duration": "1시간 30분"
@@ -59,7 +79,7 @@ export default function Home() {
       "date": "1일차",
       "time": "오후 1시",
       "dest": "태종대",
-      "content": "태종대에서 아름다운 절경을 감상하고 등대를 방문하세요.",
+      //"content": "태종대에서 아름다운 절경을 감상하고 등대를 방문하세요.",
       "addr": "부산광역시 영도구 태종대길 31",
       "cost": "입장료 1인당 1,200원",
       "duration": "2시간 30분"
@@ -68,7 +88,7 @@ export default function Home() {
       "date": "1일차",
       "time": "오후 4시",
       "dest": "국제시장",
-      "content": "국제시장에서 쇼핑과 먹거리를 즐기세요.",
+      //"content": "국제시장에서 쇼핑과 먹거리를 즐기세요.",
       "addr": "부산광역시 중구 중앙동 4-1",
       "cost": "쇼핑 비용 1인당 1만원",
       "duration": "2시간"
@@ -77,7 +97,7 @@ export default function Home() {
       "date": "1일차",
       "time": "오후 6시",
       "dest": "감천문화마을",
-      "content": "감천문화마을에서 예쁜 골목길과 벽화를 감상하세요.",
+      //"content": "감천문화마을에서 예쁜 골목길과 벽화를 감상하세요.",
       "addr": "부산광역시 서구 감천동 동백길 10",
       "cost": "무료",
       "duration": "1시간 30분"
@@ -86,7 +106,7 @@ export default function Home() {
       "date": "1일차",
       "time": "오후 7시 30분",
       "dest": "Jagalchi Market 야시장",
-      "content": "자갈치 시장 야시장에서 신선한 해산물을 저렴하게 맛보세요.",
+      //"content": "자갈치 시장 야시장에서 신선한 해산물을 저렴하게 맛보세요.",
       "addr": "부산광역시 중구 중앙동 2-1",
       "cost": "저녁 식사 비용 1인당 2만원",
       "duration": "1시간"
@@ -110,6 +130,7 @@ export default function Home() {
     setLoading(false);
     const result = { role: "model", parts: [{text: "API 연동 전 임시 응답입니다."}]};
     setMessages((messages) => [...messages, result]);
+
     return;
   }
   /*
@@ -144,7 +165,7 @@ export default function Home() {
   };
   */
   return (
-    <div className="w-4/5 h-screen mx-auto flex flex-col">
+    <div className="w-full h-screen mx-auto flex flex-col bg-white">
       <div className="h-12 bg-blue-500 flex justify-between items-center">
         <div className="flex items-center">
             {/* Banner Placeholder */}
@@ -155,23 +176,40 @@ export default function Home() {
         {/* Login/Logout Icon Placeholder */}
         <span className="mr-2">🔒</span>
       </div>
+      <div className= "bg-white text-2xl font-bold text-black ml-5 mt-5 ">검색 한 번으로 간단하게 일정 짜기
+      </div>
       {/* Search Part */}
       <div className="h-1/4 bg-white p-4">
           {/* Search Window Placeholder */}
-          <input type="text" placeholder="어디로 떠나고 싶으세요?" className="w-1/5 p-2 border rounded text-black"/>
+          <input type="text" placeholder="어디로 떠나고 싶으세요?" className="w-1/5 p-2 mr-2 border rounded text-black"/>
           {/* Date Picker Placeholder */}
-          <input type="date" className="w-1/5 p-2 mt-2 border rounded text-black"/>
-          <input type="date" className="w-1/5 p-2 mt-2 border rounded text-black"/>
+          <input type="date" className="w-1/8 p-2 mt-2 mr-2 border rounded text-black"/>
+          <input type="date" className="w-1/8 p-2 mt-2 mr-2 border rounded text-black"/>
           {/* Dropdown List Placeholder */}
-          <select className="w-1/5 p-2 mt-2 border rounded text-black">
+          {/* <select className="w-1/8 p-2 mt-2 border rounded text-black">
               <option value="option1">1</option>
               <option value="option2">2</option>
-          </select>
+          </select> */}
+          <Popover>
+           <PopoverTrigger asChild>
+           <Button className="ml-2" variant="outline">{displayCount}</Button>
+           </PopoverTrigger>
+           <PopoverContent>
+            <div className="flex items-center justify-center">
+              <Button onClick={decrement} className="bg-red-500 text-white p-2 rounded">-</Button>
+              <span className="mx-4 text-xl">{count}</span>
+              <Button onClick={increment} className="bg-green-500 text-white p-2 rounded">+</Button>
+              <Button onClick={applyCount} className="ml-5">적용</Button>
+            </div>
+          </PopoverContent>
+          </Popover>
+          <Button className="bg-blue-500 text-white ml-2">검색하기</Button>
       </div>
-      <div className="flex h-3/4 bg-gray-200 p-4 overflow-hidden text-black">
-
+      <div className="bg-white text-2xl font-bold text-black ml-7">이런 일정은 어떠세요?
+      </div>
+      <div className="flex w-8/10 h-3/4 bg-gray-200 p-4 overflow-hidden text-black mt-2 ml-5 mr-5">
         {/* Table Placeholder (populate with your schedule data) */}
-        <div className="w-3/4 pr-4 overflow-auto">
+        <div className="w-full pr-4 overflow-auto">
           <table className="table-auto">
               <thead>
                 <tr className="bg-gray-200">
