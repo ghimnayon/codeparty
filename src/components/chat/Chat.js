@@ -8,13 +8,13 @@ import { useSession } from "next-auth/react";
 
 export const Chat = ({ messages, loading, onSendMessage }) => {
 
-  const router = useRouter();
+  /*const router = useRouter();
   const { data } = useSession({
     required: true,
     onUnauthenticated() {
       router.replace("/login");
     },
-  });
+  });*/
 
   return (
     <>
