@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Chat } from "@/chat/Chat";
-import { Schedule } from "@/schedule/Schedule";
+import { Chat } from "@/components/chat/Chat";
+import { Schedule } from "@/components/schedule/Schedule";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -128,7 +128,7 @@ export default function Home() {
         </div>
 
         {/* Chat Placeholder */}
-        <div className="w-1/3 h-full bg-gray-300 p-2 overflow-hidden">
+        <div className="w-1/3 h-full flex flex-col bg-gray-300 p-2 overflow-hidden">
           {/*
             메인 채팅 컴포넌트
             messages: 메시지 목록

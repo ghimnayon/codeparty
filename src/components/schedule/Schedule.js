@@ -93,6 +93,7 @@ const schedule_temp = {
 
 function toggleSchedule(dayId) {
     const schedule = document.getElementById(dayId);
+    console.log(schedule);
     schedule.classList.toggle('hidden');
 }
 
@@ -111,16 +112,20 @@ function closeImage() {
 export const Schedule = () => {
     return(
         <>
-            <Script id="toggleSchedule" strategy="afterInteractive">
-                {`(${toggleSchedule.toString()})();`}
-                {`(${openImage.toString()})();`}
-                {`(${closeImage.toString()})();`}
-            </Script>
-          <div class="container mx-auto">
-            <div class="bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer" onclick="toggleSchedule('day1')">
-              <div class="flex justify-between items-center">
+          <div className="container mx-auto">
+            <div className="bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer" onClick={() => toggleSchedule('day1')}>
+              <div className="flex justify-between items-center md:hidden"> {/*Small screens */}
                 <div>
-                    <h2 class="text-xl font-semibold">Day 1: 2024-05-01</h2>
+                    <h2 className="text-xl font-semibold">1일차(05/01)</h2>
+                </div>
+                <div>
+                    <p>📌 3</p>
+                    <p>💳 $150</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-center hidden md:block lg:hidden"> {/*Medium screens */}
+                <div>
+                    <h2 className="text-xl font-semibold">1일차: 2024-05-01</h2>
                     <p>Main Destination: Destination A</p>
                 </div>
                 <div>
@@ -128,56 +133,91 @@ export const Schedule = () => {
                     <p>Total Cost: $150</p>
                 </div>
               </div>
-              <div id="day1" class="mt-4">
-                <div class="mb-4">
+              <div className="flex justify-between items-center hidden lg:block"> {/*Large screens */}
+                <div>
+                    <h2 className="text-xl font-semibold">Day 1: 2024-05-01</h2>
+                    <p>Main Destination: Destination A</p>
+                </div>
+                <div>
+                    <p>Destinations: 3</p>
+                    <p>Total Cost: $150</p>
+                </div>
+              </div>
+              <div id="day1" className="mt-4 hidden">
+                <div className="mb-4">
                   <p><strong>Time:</strong> 09:00 AM</p>
-                  <p><strong>Destination:</strong> Destination A <span class="hover-address" data-address="123 Main St, City">📍</span></p>
+                  <p><strong>Destination:</strong> Destination A <span className="hover-address" data-address="123 Main St, City">📍</span></p>
                   <p><strong>Content:</strong> Visit to museum</p>
                   <p><strong>Cost:</strong> $50</p>
                   <p><strong>Duration:</strong> 2 hours</p>
-                  <div class="h-16 bg-gray-300 mt-2" onclick="openImage('image1')">Image Placeholder</div>
+                  <div className="h-16 bg-gray-300 mt-2" onClick={() => openImage('image1')}>Image Placeholder</div>
                 </div>
-                <div class="mb-4">
+                <div className="mb-4">
                   <p><strong>Time:</strong> 12:00 PM</p>
-                  <p><strong>Destination:</strong> Destination B <span class="hover-address" data-address="456 Elm St, City">📍</span></p>
+                  <p><strong>Destination:</strong> Destination B <span className="hover-address" data-address="456 Elm St, City">📍</span></p>
                   <p><strong>Content:</strong> Lunch at local restaurant</p>
                   <p><strong>Cost:</strong> $30</p>
                   <p><strong>Duration:</strong> 1 hour</p>
-                  <div class="h-16 bg-gray-300 mt-2" onclick="openImage('image2')">Image Placeholder</div>
+                  <div className="h-16 bg-gray-300 mt-2" onClick={() => openImage('image2')}>Image Placeholder</div>
                 </div>
-                <div class="mb-4">
+                <div className="mb-4">
                   <p><strong>Time:</strong> 02:00 PM</p>
-                  <p><strong>Destination:</strong> Destination C <span class="hover-address" data-address="789 Pine St, City">📍</span></p>
+                  <p><strong>Destination:</strong> Destination C <span className="hover-address" data-address="789 Pine St, City">📍</span></p>
                   <p><strong>Content:</strong> Afternoon hike</p>
                   <p><strong>Cost:</strong> $70</p>
                   <p><strong>Duration:</strong> 3 hours</p>
-                  <div class="h-16 bg-gray-300 mt-2" onclick="openImage('image3')">Image Placeholder</div>
+                  <div className="h-16 bg-gray-300 mt-2" onClick={() => openImage('image3')}>Image Placeholder</div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer" onClick={() => toggleSchedule('day2')}>
+              <div className="flex justify-between items-center">
+                <div>
+                    <h2 className="text-xl font-semibold">Day 2: 2024-05-02</h2>
+                    <p>Main Destination: Destination A</p>
+                </div>
+                <div>
+                    <p>Destinations: 4</p>
+                    <p>Total Cost: $200</p>
+                </div>
+              </div>
+              <div id="day2" className="mt-4 hidden">
+                <div className="mb-4">
+                  <p><strong>Time:</strong> 09:00 AM</p>
+                  <p><strong>Destination:</strong> Destination A <span className="hover-address" data-address="123 Main St, City">📍</span></p>
+                  <p><strong>Content:</strong> Visit to museum</p>
+                  <p><strong>Cost:</strong> $50</p>
+                  <p><strong>Duration:</strong> 2 hours</p>
+                  <div className="h-16 bg-gray-300 mt-2" onClick={() => openImage('image1')}>Image Placeholder</div>
+                </div>
+                <div className="mb-4">
+                  <p><strong>Time:</strong> 12:00 PM</p>
+                  <p><strong>Destination:</strong> Destination B <span className="hover-address" data-address="456 Elm St, City">📍</span></p>
+                  <p><strong>Content:</strong> Lunch at local restaurant</p>
+                  <p><strong>Cost:</strong> $30</p>
+                  <p><strong>Duration:</strong> 1 hour</p>
+                  <div className="h-16 bg-gray-300 mt-2" onClick={() => openImage('image2')}>Image Placeholder</div>
+                </div>
+                <div className="mb-4">
+                  <p><strong>Time:</strong> 02:00 PM</p>
+                  <p><strong>Destination:</strong> Destination C <span className="hover-address" data-address="789 Pine St, City">📍</span></p>
+                  <p><strong>Content:</strong> Afternoon hike</p>
+                  <p><strong>Cost:</strong> $70</p>
+                  <p><strong>Duration:</strong> 3 hours</p>
+                  <div className="h-16 bg-gray-300 mt-2" onClick={() => openImage('image3')}>Image Placeholder</div>
                 </div>
               </div>
             </div>
           </div>
           
           <div className="w-3/4 pr-4 overflow-auto">
-            <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
-                        <div class="relative">
-                        <button onclick="closeImage()" class="absolute top-0 right-0 m-4 text-white text-2xl">×</button>
-                        <img id="modalImage" src="" alt="Large view" class="max-w-full max-h-full"/>
+            <div id="imageModal" className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
+                        <div className="relative">
+                        <button onClick={() => closeImage()} className="absolute top-0 right-0 m-4 text-white text-2xl">×</button>
+                        <img id="modalImage" src="" alt="Large view" className="max-w-full max-h-full"/>
                         </div>
             </div>
           </div>
-        
-            <div>
-            <table className="table-auto invisible">
-                <thead>
-                    <tr className="bg-gray-200">
-                    {createTableHeaders(schedule_temp)}
-                    </tr>
-                </thead>
-                <tbody>
-                    {createTableRows(schedule_temp)}
-                </tbody>
-            </table>
-            </div>
         </>
     );
 }
