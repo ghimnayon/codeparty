@@ -208,9 +208,62 @@ export default function Home() {
       <div className="bg-white text-2xl font-bold text-black ml-7">이런 일정은 어떠세요?
       </div>
       <div className="flex w-8/10 h-3/4 bg-gray-200 p-4 overflow-hidden text-black mt-2 ml-5 mr-5">
+         {/* Schedule Placeholder */}
+         <div className="w-2/3 h-full pr-4 overflow-auto">
+          <div class="container mx-auto">
+            <div class="bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer" onclick="toggleSchedule('day1')">
+              <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-semibold">Day 1: 2024-05-01</h2>
+                    <p>Main Destination: Destination A</p>
+                </div>
+                <div>
+                    <p>Destinations: 3</p>
+                    <p>Total Cost: $150</p>
+                </div>
+              </div>
+              <div id="day1" class="mt-4">
+                <div class="mb-4">
+                  <p><strong>Time:</strong> 09:00 AM</p>
+                  <p><strong>Destination:</strong> Destination A <span class="hover-address" data-address="123 Main St, City">📍</span></p>
+                  <p><strong>Content:</strong> Visit to museum</p>
+                  <p><strong>Cost:</strong> $50</p>
+                  <p><strong>Duration:</strong> 2 hours</p>
+                  <div class="h-16 bg-gray-300 mt-2" onclick="openImage('image1')">Image Placeholder</div>
+                </div>
+                <div class="mb-4">
+                  <p><strong>Time:</strong> 12:00 PM</p>
+                  <p><strong>Destination:</strong> Destination B <span class="hover-address" data-address="456 Elm St, City">📍</span></p>
+                  <p><strong>Content:</strong> Lunch at local restaurant</p>
+                  <p><strong>Cost:</strong> $30</p>
+                  <p><strong>Duration:</strong> 1 hour</p>
+                  <div class="h-16 bg-gray-300 mt-2" onclick="openImage('image2')">Image Placeholder</div>
+                </div>
+                <div class="mb-4">
+                  <p><strong>Time:</strong> 02:00 PM</p>
+                  <p><strong>Destination:</strong> Destination C <span class="hover-address" data-address="789 Pine St, City">📍</span></p>
+                  <p><strong>Content:</strong> Afternoon hike</p>
+                  <p><strong>Cost:</strong> $70</p>
+                  <p><strong>Duration:</strong> 3 hours</p>
+                  <div class="h-16 bg-gray-300 mt-2" onclick="openImage('image3')">Image Placeholder</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         {/* Table Placeholder (populate with your schedule data) */}
-        <div className="w-full pr-4 overflow-auto">
-          <table className="table-auto">
+          <div className="w-3/4 pr-4 overflow-auto">
+            <table className="table-auto">
+              <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
+                <div class="relative">
+                  <button onclick="closeImage()" class="absolute top-0 right-0 m-4 text-white text-2xl">×</button>
+                  <img id="modalImage" src="" alt="Large view" class="max-w-full max-h-full"/>
+                </div>
+              </div>
+            </table>
+          </div>
+
+          <table className="table-auto invisible">
               <thead>
                 <tr className="bg-gray-200">
                   {createTableHeaders(schedule_temp)}
