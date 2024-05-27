@@ -123,7 +123,9 @@ export default function Home() {
       </div>
       <div className="flex w-8/10 h-3/4 bg-gray-200 p-4 overflow-hidden text-black mt-2 ml-5 mr-5">
         {/* Schedule Placeholder */}
-        <Schedule />
+        <div className="w-2/3 h-full pr-4 overflow-auto">
+          <Schedule />
+        </div>
 
         {/* Chat Placeholder */}
         <div className="w-1/3 h-full bg-gray-300 p-2 overflow-hidden">

@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 
 function createTableHeaders(scheduleData) {
     if (scheduleData.schedule){
@@ -87,10 +89,33 @@ const schedule_temp = {
       }
     ]
   };
+// 🕒💰💳⌚📌🎫⏰
+
+function toggleSchedule(dayId) {
+    const schedule = document.getElementById(dayId);
+    schedule.classList.toggle('hidden');
+}
+
+function openImage(imageId) {
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    modalImage.src = `path/to/${imageId}.jpg`; // Replace with actual image paths
+    imageModal.classList.remove('hidden');
+}
+
+function closeImage() {
+    const imageModal = document.getElementById('imageModal');
+    imageModal.classList.add('hidden');
+}
 
 export const Schedule = () => {
     return(
-        <div className="w-2/3 h-full pr-4 overflow-auto">
+        <>
+            <Script id="toggleSchedule" strategy="afterInteractive">
+                {`(${toggleSchedule.toString()})();`}
+                {`(${openImage.toString()})();`}
+                {`(${closeImage.toString()})();`}
+            </Script>
           <div class="container mx-auto">
             <div class="bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer" onclick="toggleSchedule('day1')">
               <div class="flex justify-between items-center">
@@ -131,28 +156,28 @@ export const Schedule = () => {
               </div>
             </div>
           </div>
-
+          
           <div className="w-3/4 pr-4 overflow-auto">
-            <table className="table-auto">
-              <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
-                <div class="relative">
-                  <button onclick="closeImage()" class="absolute top-0 right-0 m-4 text-white text-2xl">×</button>
-                  <img id="modalImage" src="" alt="Large view" class="max-w-full max-h-full"/>
-                </div>
-              </div>
-            </table>
+            <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
+                        <div class="relative">
+                        <button onclick="closeImage()" class="absolute top-0 right-0 m-4 text-white text-2xl">×</button>
+                        <img id="modalImage" src="" alt="Large view" class="max-w-full max-h-full"/>
+                        </div>
+            </div>
           </div>
-
-          <table className="table-auto invisible">
-              <thead>
-                <tr className="bg-gray-200">
-                  {createTableHeaders(schedule_temp)}
-                </tr>
-              </thead>
-              <tbody>
-                {createTableRows(schedule_temp)}
-              </tbody>
-          </table>
-        </div>
+        
+            <div>
+            <table className="table-auto invisible">
+                <thead>
+                    <tr className="bg-gray-200">
+                    {createTableHeaders(schedule_temp)}
+                    </tr>
+                </thead>
+                <tbody>
+                    {createTableRows(schedule_temp)}
+                </tbody>
+            </table>
+            </div>
+        </>
     );
 }
