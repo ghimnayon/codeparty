@@ -3,6 +3,9 @@ import { ChatInput } from "./ChatInput";
 import { ChatLoader } from "./ChatLoader";
 import { ChatBubble } from "./ChatBubble";
 
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 export const Chat = ({ messages, loading, onSendMessage }) => {
   return (
     <>

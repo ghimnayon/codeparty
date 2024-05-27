@@ -1,5 +1,7 @@
 "use client";
 
+import { SessionProvider } from "next-auth/react";
+
 import { useEffect, useRef, useState } from "react";
 import { Chat } from "@/components/chat/Chat";
 import { Schedule } from "@/components/schedule/Schedule";
@@ -83,10 +85,10 @@ export default function Home() {
       <div className="h-12 bg-blue-500 flex justify-between items-center">
         <div className="flex items-center">
             {/* Banner Placeholder */}
-            <img src="https://storage.googleapis.com/static.fastcampus.co.kr/prod/uploads/202307/080059-490/red-s-3-web.png" alt="Banner Image" className="h-8 w-8 rounded-full"/>
+            <img src="https://png.pngtree.com/png-clipart/20210610/ourlarge/pngtree-i-like-to-travel-png-image_3431196.jpg" alt="Banner Image" className="h-8 w-8 rounded-full"/>
         </div>
         {/* Username Placeholder */}
-        <span className="ml-2">김진중</span>
+        <span className="ml-2">CodeTravel</span>
         {/* Login/Logout Icon Placeholder */}
         <span className="mr-2">🔒</span>
       </div>
