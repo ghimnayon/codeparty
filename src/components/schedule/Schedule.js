@@ -112,11 +112,12 @@ function closeImage() {
 export const Schedule = () => {
     return(
         <>
-          <div className="container mx-auto">
+          <div className="container mx-auto p-0">
             <div className="bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer" onClick={() => toggleSchedule('day1')}>
               <div className="flex justify-between items-center md:hidden"> {/*Small screens */}
                 <div>
-                    <h2 className="text-xl font-semibold">1일차(05/01)</h2>
+                    <h2 className="text-xl font-semibold">1일차</h2>
+                    <p>05-01</p>
                 </div>
                 <div>
                     <p>📌 3</p>
@@ -171,14 +172,34 @@ export const Schedule = () => {
               </div>
             </div>
             <div className="bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer" onClick={() => toggleSchedule('day2')}>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center md:hidden"> {/*Small screens */}
                 <div>
-                    <h2 className="text-xl font-semibold">Day 2: 2024-05-02</h2>
+                    <h2 className="text-xl font-semibold">2일차</h2>
+                    <p>05-02</p>
+                </div>
+                <div>
+                    <p>📌 4</p>
+                    <p>💳 $200</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-center hidden md:block lg:hidden"> {/*Medium screens */}
+                <div>
+                    <h2 className="text-xl font-semibold">2일차: 2024-05-02</h2>
                     <p>Main Destination: Destination A</p>
                 </div>
                 <div>
                     <p>Destinations: 4</p>
                     <p>Total Cost: $200</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-center hidden lg:block"> {/*Large screens */}
+                <div>
+                    <h2 className="text-xl font-semibold">Day 1: 2024-05-01</h2>
+                    <p>Main Destination: Destination A</p>
+                </div>
+                <div>
+                    <p>Destinations: 3</p>
+                    <p>Total Cost: $150</p>
                 </div>
               </div>
               <div id="day2" className="mt-4 hidden">
