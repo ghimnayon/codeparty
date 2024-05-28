@@ -1,56 +1,23 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
-  const router = useRouter();
-  const { data: session } = useSession();
-
   return (
     <div className="flex justify-center h-screen">
-      {session ? (
-        <div className="grid m-auto text-center">
-          <div className="m-4">Signed in as {session.user.name}</div>
-          <button
-            className={`w-40
-                      justify-self-center
-                      p-1 mb-4
-                    bg-blue-500 text-white
-                      border border-blue-500 rounded
-                    hover:bg-white hover:text-blue-500`}
-            onClick={() => router.push("/")}
-          >
-            Go to Home
-          </button>
-          <button
-            className={`w-40
-                      justify-self-center
-                      p-1 mb-4
-                    text-blue-500
-                      border border-blue-500 rounded
-                    hover:bg-white hover:text-blue-500`}
-            onClick={() => signOut()}
-          >
-            Sign out
-          </button>
-        </div>
-      ) : (
-        <div className="grid m-auto text-center">
-          <div className="m-4">Not signed in</div>
-          <button
-            className={`w-40
-                      justify-self-center
-                      p-1 mb-4
-                    bg-blue-500 text-white
-                      border border-blue-500 rounded
-                    hover:bg-white hover:text-blue-500`}
-            onClick={() => signIn()}
-          >
-            Sign in
-          </button>
-        </div>
-      )}
+      <div className="grid m-auto text-center">
+        <button
+          className={`w-40
+                    justify-self-center
+                    p-1 mb-4
+                  bg-yellow-500 text-black
+                    border border-yellow-500 rounded
+                  hover:bg-white hover:text-yellow-500`}
+          onClick={() => signIn("kakao")}
+        >
+          Sign in with Kakao
+        </button>
+      </div>
     </div>
   );
 }

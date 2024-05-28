@@ -9,6 +9,17 @@ const handler = NextAuth({
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async signIn({ account, profile }) {
+      if (account.provider === "kakao") {
+        return profile.id !== null;
+      }
+      return true;
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
+  },
 });
 
 export { handler as GET, handler as POST };
