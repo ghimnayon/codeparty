@@ -7,6 +7,7 @@ import { Chat } from "@/components/chat/Chat";
 import { Schedule } from "@/components/schedule/Schedule";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import AdvancedSearch from "@/components/advancedSearch/AdvancedSearch";
 
 export default function Home() {
   const router = useRouter();
@@ -14,6 +15,8 @@ export default function Home() {
 
   const [count, setCount] = useState(1);
   const [displayCount, setDisplayCount] = useState("인원");
+  const [advancedSearch, setAdvancedSearch] = useState(false);
+  const [advancedSearchOptions, setAdvancedSearchOptions] = useState({});
 
   const increment = () => {
     setCount(count + 1);
@@ -27,6 +30,9 @@ export default function Home() {
     setDisplayCount(`인원: ${count}명`);
   };
 
+  const toggleAdvancedSearch = () => {
+    setAdvancedSearch(!advancedSearch);
+  }
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const handleSend = async (message) => {
@@ -73,7 +79,7 @@ export default function Home() {
       <div className="bg-white text-2xl font-bold text-black ml-5 mt-5">
         검색 한 번으로 간단하게 일정 짜기
       </div>
-      <div className="h-1/4 bg-white p-4">
+      <div className="h-1/4 bg-white p-4 relative">
         <input
           type="text"
           placeholder="어디로 떠나고 싶으세요?"
@@ -115,6 +121,12 @@ export default function Home() {
           </PopoverContent>
         </Popover>
         <Button className="bg-blue-500 text-white ml-2">검색하기</Button>
+        <Button onClick={toggleAdvancedSearch} className="bg-gray-500 text-white ml-2">고급 검색</Button>
+        {advancedSearch && (
+          <div className="absolute top-full left-0 w-full bg-white shadow-lg p-4 z-10">
+            <AdvancedSearch setAdvancedSearchOptions={setAdvancedSearchOptions} />
+          </div>
+        )}
       </div>
       <div className="bg-white text-2xl font-bold text-black ml-7">
         이런 일정은 어떠세요?
