@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider"; // Import Shadcn slider component
 
 const AdvancedSearch = ({ setAdvancedSearchOptions }) => {
-  const [budget, setBudget] = useState([0, 1000000]);
+  const [budget, setBudget] = useState('');
   const [intensity, setIntensity] = useState(1);
   const [meals, setMeals] = useState(3);
   const [walkingDistance, setWalkingDistance] = useState([0, 20]);
@@ -17,26 +17,24 @@ const AdvancedSearch = ({ setAdvancedSearchOptions }) => {
     });
   };
 
+  const handleBudgetChange = (e) => {
+    const value = e.target.value;
+    if(/^\d*$/.test(value)) {
+      setBudget(value);
+    }
+  }
+
   return (
     <div className="mt-4 p-4 border rounded bg-gray-100">
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">예산 범위 (원)</label>
-        <Slider
-          defaultValue={[budget[0], budget[1]]}
-          onValueChange={setBudget}
-          min={0}
-          max={1000000}
-          step={10000}
-          // minStepsBetweenThumbs={5000}
-          className="mt-2"
+        <label className="block text-sm font-medium text-gray-700">총 예산 (만원)</label>
+        <input
+          type="text"
+          value={budget}
+          onChange={handleBudgetChange}
+          className="mt-2 p-2 border rounded w-full"
+          placeholder="예산을 입력하세요"
         />
-        <div className="flex justify-between text-xs">
-          <span>₩{0}</span>
-          <span>₩{1000000}</span>
-        </div>
-        <div className="text-center mt-2">
-            <span>현재 예산: ₩{budget[0]}~₩{budget[1]}</span>
-        </div>
       </div>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
