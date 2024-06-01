@@ -2,6 +2,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientSessionProvider from "@/components/ClientSessionProvider";
+import { ScheduleProvider } from "@/components/schedule/ScheduleContext";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ClientSessionProvider>
-          {children}
+          <ScheduleProvider>
+            {children}
+          </ScheduleProvider>
         </ClientSessionProvider>
       </body>
     </html>

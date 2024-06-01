@@ -14,8 +14,8 @@ const systemInstruction =
   '{"answer": "여기에 너의 자연어 응답을 넣어주고", "schedule": "여기에 json 형식의 일정을 넣어줘."}' + 
   '와 같이 대답과 일정으로 구성된 json 방식으로 응답을 부탁해.' + 
   '일정은 반드시 다음과 같은 json 형식으로 대답해줘.' + 
-  '[{date: 05-01, time: 11:00, dest: 목적지, content: 내용, addr: 목적지주소, cost: 5만원, duration: 70분}, ' + 
-  '{date: 05-01, time: 17:00, dest: 목적지, content: 내용, addr: 목적지주소, cost: 6만원, duration: 20분}' +
+  '[{date: 05-01, time: 11:00, dest: 목적지, content: 내용, address: 목적지주소, cost: 5만원, duration: 70분}, ' + 
+  '{date: 05-01, time: 17:00, dest: 목적지, content: 내용, address: 목적지주소, cost: 6만원, duration: 20분}' +
   '날짜는 MM-DD 형식, 시간은 24시간 형식이고, 비용은 만원 단위로, duration은 10분 단위로 대답해줘. 무료여도 0만원으로 대답해줘.' + 
   '비용은 무조건 1인당 비용으로 계산해서 만원 단위로만 알려줘.' +
   '장소의 경우 @Google 지도에 있는 장소만 추천해주고, 주소도 @Google 지도 기준으로 알려줘.' +
@@ -30,7 +30,7 @@ export async function POST(req) {
 
   // POST 로 전송받은 내용 중 messages 를 추출
   const data = await req.json();
-  console.dir([...data.messages], { depth: 3 });
+  // console.dir([...data.messages], { depth: 3 });
 
   const chat = model.startChat({
     // 컨텍스트 유지를 위해 이전 메시지를 포함해서 보냄
