@@ -48,7 +48,7 @@ const SearchBar = () => {
           <CalendarIcon className="h-5 w-5 text-gray-500" />
           <span>{startDate ? startDate.toLocaleDateString() : '체크인'}</span>
         </Popover.Button>
-        <Popover.Panel className="absolute z-10 p-4 shadow-lg rounded-lg w-96 left-1/2 transform -translate-x-1/2 mt-2">
+        <Popover.Panel className="absolute z-10 p-4 rounded-lg w-96 -translate-x-1/2 mt-4">
           <div className="flex justify-around w-full">
             <DatePicker
               selected={startDate}
@@ -63,7 +63,7 @@ const SearchBar = () => {
               inline
               monthsShown={2}
               minDate={new Date()}
-              className="p-2 rounded"
+              className="rounded"
             />
           </div>
         </Popover.Panel>

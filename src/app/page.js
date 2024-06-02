@@ -33,20 +33,22 @@ export default function Home() {
 
   const { schedule, setSchedule } = useSchedule();
 
-  const increment = () => {
-    setCount(count + 1);
-  };
-
-  const decrement = () => {
-    setCount(count > 1 ? count - 1 : 1);
-  };
-
   const applyCount = () => {
     setDisplayCount(`인원: ${count}명`);
   };
 
   const toggleAdvancedSearch = () => {
     setAdvancedSearch(!advancedSearch);
+  };
+
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  const openPopover = () => {
+    setIsPopoverOpen(true);
+  }
+
+  const closePopover = () => {
+    setIsPopoverOpen(false);
   };
 
   const toggleUserMenu = () => {
@@ -124,7 +126,7 @@ export default function Home() {
 
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-white">
-      <div className="bg-white relative mt-2 flex justify-end mr-2 items-center">
+      <div className="bg-white relative mt-2 flex justify-end mr-2">
         {session && (
           <>
             <button
@@ -168,12 +170,16 @@ export default function Home() {
         </div>
       </main>
       <div className="bg-white p-4 relative mt-1 flex justify-center">
-        <Button onClick={toggleAdvancedSearch} className="bg-gray-500 text-white ml-2">고급 검색</Button>
-        {advancedSearch && (
-          <div className="absolute top-full left-0 w-full bg-white shadow-lg p-4 z-10">
-            <AdvancedSearch setAdvancedSearchOptions={setAdvancedSearchOptions} />
-          </div>
-        )}
+      <Popover>
+  <PopoverTrigger asChild>
+    <Button className="bg-gray-500 text-white ml-2" onClick={openPopover}>고급 검색</Button>
+  </PopoverTrigger>
+  {isPopoverOpen && (
+    <PopoverContent align="center" style={{ width: '380px', padding: '20px', maxHeight: '420px', overflowY: 'auto' }}>
+      <AdvancedSearch setAdvancedSearchOptions={setAdvancedSearchOptions} onClose={closePopover} />
+    </PopoverContent>
+  )}
+</Popover>
       </div>
       <div className="bg-white text-2xl font-bold text-black ml-7 mt-8">
         이런 일정은 어떠세요?
