@@ -19,6 +19,8 @@ import { useSchedule, updateSchedule } from "@/components/schedule/ScheduleConte
 import Head from 'next/head';
 import SearchBar from '@/components/SearchBar';
 
+import { UserMenu } from "@/app/login/user_menu";
+
 export default function Home() {
   const router = useRouter();
   const { data: session } = useSession();
@@ -27,9 +29,9 @@ export default function Home() {
   const [displayCount, setDisplayCount] = useState("인원");
   const [advancedSearch, setAdvancedSearch] = useState(false);
   const [advancedSearchOptions, setAdvancedSearchOptions] = useState({});
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const { schedule, setSchedule } = useSchedule();
-  // setSchedule(schedule_temp["schedule"]);
 
   const increment = () => {
     setCount(count + 1);
@@ -45,7 +47,12 @@ export default function Home() {
 
   const toggleAdvancedSearch = () => {
     setAdvancedSearch(!advancedSearch);
-  }
+  };
+
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
+  };
+
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -61,36 +68,33 @@ export default function Home() {
     setMessages(updatedMessages);
     setLoading(true);
     const response = await fetch("/api/gemini", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          // 메시지 목록의 첫번째를 제외하고 전송
-          // Gemini AI는 첫번째 메시지를 항상 user로 보내야 함
-          messages: updatedMessages.slice(1),
-        }),
-      });
-    
-      if (!response.ok) {
-        setLoading(false);
-        throw new Error(response.statusText);
-      }
-    
-      // 응답을 JSON 형태로 변환
-      // 비동기 API 를 사용하여 응답을 받기 때문에 await 사용
-      const result = await response.json();
-    
-      if (!result) {
-        return;
-      }
-    
-      // console.log(result);
-    
-      // 로딩 상태를 해제하고, 메시지 목록에 응답을 추가
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // 메시지 목록의 첫번째를 제외하고 전송
+        // Gemini AI는 첫번째 메시지를 항상 user로 보내야 함
+        messages: updatedMessages.slice(1),
+      }),
+    });
+
+    if (!response.ok) {
       setLoading(false);
-      setMessages((messages) => [...messages, result]);
-    
+      throw new Error(response.statusText);
+    }
+
+    // 응답을 JSON 형태로 변환
+    // 비동기 API 를 사용하여 응답을 받기 때문에 await 사용
+    const result = await response.json();
+
+    if (!result) {
+      return;
+    }
+
+    // 로딩 상태를 해제하고, 메시지 목록에 응답을 추가
+    setLoading(false);
+    setMessages((messages) => [...messages, result]);
 
     setLoading(false);
     setMessages((messages) => [...messages, result]);
@@ -118,13 +122,25 @@ export default function Home() {
     handleReset();
   }, []);
 
-
-
-
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-white">
-       <div className="bg-white relative mt-2 flex justify-end mr-2">
-      {session ? (
+      <div className="bg-white relative mt-2 flex justify-end mr-2 items-center">
+        {session && (
+          <>
+            <button
+              className="bg-gray-500 text-white p-1 rounded mr-2"
+              onClick={toggleUserMenu}
+            >
+              {session.user.name}
+            </button>
+            {showUserMenu && (
+              <div className="absolute top-full right-0 w-1/3 bg-white shadow-lg p-4 z-10">
+                <UserMenu />
+              </div>
+            )}
+          </>
+        )}
+        {session ? (
           <button
             className="bg-gray-500 text-white p-1 rounded"
             onClick={() => signOut()}
@@ -139,7 +155,7 @@ export default function Home() {
             로그인
           </button>
         )}
-        </div>
+      </div>
       <Head>
         <title>Travel Search</title>
         <meta name="description" content="Search for your next travel destination" />
