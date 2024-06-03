@@ -162,24 +162,13 @@ useEffect(() => {
           </PopoverTrigger>
           {isPopoverOpen && (
             <PopoverContent align="end" className="w-48 bg-white p-2 shadow-lg">
-              {!session ? (
-                <Button className="w-full bg-gray-500 text-white p-2 rounded" onClick={() => router.push("/login")}>
-                  로그인
-                </Button>
-              ) : (
-                <>
-                  <Button className="w-full bg-gray-500 text-white p-2 rounded mb-2" onClick={toggleUserMenu}>
-                    {session.user.name}
-                  </Button>
-                  <Button className="w-full bg-gray-500 text-white p-2 rounded" onClick={() => signOut()}>
+              <Button className="w-full bg-gray-500 text-white p-2 rounded" onClick={() => signOut()}>
                     로그아웃
-                  </Button>
-                  {showUserMenu && (
-                    <div className="mt-2">
-                      <UserMenu />
-                    </div>
-                  )}
-                </>
+              </Button>
+              {showUserMenu && (
+                <div className="mt-2">
+                  <UserMenu />
+                </div>
               )}
             </PopoverContent>
           )}
