@@ -23,7 +23,7 @@ export const DownloadButton = ({text, filename}) => {
   };
 
   return (
-    <Button onClick={() => handleDownload(filename)} variant="primary">
+    <Button className="bg-green-400" onClick={() => handleDownload(filename)} variant="primary">
       {text}
     </Button>
   );

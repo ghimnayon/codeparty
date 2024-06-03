@@ -132,6 +132,8 @@ useEffect(() => {
   }
 }, [isPopoverOpen]);
 
+  setSchedule(schedule_temp2);
+
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-white">
       <div className="bg-white relative mt-2 flex justify-end mr-2">
@@ -195,15 +197,20 @@ useEffect(() => {
           )}
         </Popover>
       </div>
-      <div className="bg-white text-2xl font-bold text-black ml-7 mt-8">
-        이런 일정은 어떠세요?
-        <DownloadButton text="저장" filename="MySchedule.csv" />
+      <div className="flex w-4/5 justify-center bg-white text-2xl font-bold text-black ml-7 mt-8">
+        <div className="w-4/5">
+          이런 일정은 어떠세요?
+        </div>
+        <div className="flex flex-row w-1/5">
+          <Button> 일정 저장하기</Button>
+          <DownloadButton text="엑셀 다운로드" filename="MySchedule.csv" />
+        </div>
       </div>
-      <div className="flex w-4/5 bg-gray-200 p-4 overflow-hidden text-black mt-2 mx-auto">
+      <div className="flex w-4/5 bg-gray-200 p-4 overflow-auto text-black mt-2 mx-auto">
         <div className="w-3/5 h-96 pr-4 overflow-auto">
           <Schedule />
         </div>
-        <div className="w-2/5 h-96 flex flex-col bg-gray-300 p-2 overflow-hidden">
+        <div className="w-2/5 h-96 flex flex-col bg-gray-300 p-2 overflow-auto">
           <Chat messages={messages} loading={loading} onSendMessage={handleSend} />
         </div>
         <div ref={messagesEndRef} />
