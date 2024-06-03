@@ -7,8 +7,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-import AdvancedSearch from "@/components/advancedSearch/AdvancedSearch";
-
 import { Schedule, schedule_temp2 } from "@/components/schedule/Schedule";
 import { DownloadButton } from "@/components/schedule/scheduleDownload";
 
@@ -17,7 +15,7 @@ import { Chat } from "@/components/chat/Chat";
 import { useSchedule } from "@/components/schedule/ScheduleContext";
 
 import Head from 'next/head';
-import SearchBar from '@/components/SearchBar';
+import SearchBar from '../components/SearchBar';
 
 import { UserMenu } from "@/app/login/user_menu";
 
@@ -37,10 +35,6 @@ export default function Home() {
     setDisplayCount(`인원: ${count}명`);
   };
 
-  const toggleAdvancedSearch = () => {
-    setAdvancedSearch(!advancedSearch);
-  };
-
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const togglePopover = useCallback(() => {
@@ -48,9 +42,9 @@ export default function Home() {
   }, []);
 
 
-const closePopover = useCallback(() => {
-  setIsPopoverOpen(false);
-}, []);
+  const closePopover = useCallback(() => {
+    setIsPopoverOpen(false);
+  }, []);
 
   const toggleUserMenu = () => {
     setShowUserMenu(!showUserMenu);
@@ -160,16 +154,14 @@ useEffect(() => {
           </Button>
 
           </PopoverTrigger>
-          {isPopoverOpen && (
+          {showUserMenu && (
             <PopoverContent align="end" className="w-48 bg-white p-2 shadow-lg">
               <Button className="w-full bg-gray-500 text-white p-2 rounded" onClick={() => signOut()}>
                     로그아웃
               </Button>
-              {showUserMenu && (
-                <div className="mt-2">
-                  <UserMenu />
-                </div>
-              )}
+              <div className="mt-2">
+                <UserMenu />
+              </div>
             </PopoverContent>
           )}
         </Popover>
@@ -181,22 +173,8 @@ useEffect(() => {
       </Head>
       <main className="flex flex-col items-center w-full">
         <h1 className="text-4xl font-bold mb-8 mt-4">여행 계획 세우기</h1>
-        <div className="w-full flex justify-center">
-          <SearchBar className="w-3/5" />
-        </div>
+        <SearchBar></SearchBar>
       </main>
-      <div className="bg-white p-4 relative mt-1 flex justify-center">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button className="bg-gray-500 text-white ml-2" onClick={() => setIsPopoverOpen(true)}>고급 검색</Button>
-          </PopoverTrigger>
-          {isPopoverOpen && (
-            <PopoverContent align="center" style={{ width: '380px', padding: '20px', maxHeight: '420px', overflowY: 'auto' }}>
-              <AdvancedSearch setAdvancedSearchOptions={setAdvancedSearchOptions} onClose={closePopover} />
-            </PopoverContent>
-          )}
-        </Popover>
-      </div>
       <div className="bg-white text-2xl font-bold text-black ml-7 mt-8">
         이런 일정은 어떠세요?
         <DownloadButton text="저장" filename="MySchedule.csv" />

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 
-const AdvancedSearch = ({ setAdvancedSearchOptions, onClose }) => {
-  const [budget, setBudget] = useState('');
-  const [meals, setMeals] = useState([]);
-  const [intensity, setIntensity] = useState('');
-  const [walkingDistance, setWalkingDistance] = useState('');
+import SearchBar from "@/components/SearchBar";
+
+const AdvancedSearch = ({ setBudget, setMeals, setIntensity, setWalkingDistance, onClose }) => {
+  const [AdBudget, setAdBudget] = useState('');
+  const [AdMeals, setAdMeals] = useState([]);
+  const [AdIntensity, setAdIntensity] = useState('');
+  const [AdWalkingDistance, setAdWalkingDistance] = useState([0, 20]);
 
   const walkingDistanceOptions = [
     "1km", "3km", "5km", "7km", 
@@ -16,25 +19,23 @@ const AdvancedSearch = ({ setAdvancedSearchOptions, onClose }) => {
 
   const intensityOptions = ["낮음", "보통", "높음" ];
 
-  const applyFilters = () => {
-    setAdvancedSearchOptions({
-      budget,
-      meals,
-      intensity,
-      walkingDistance,
-    });
+  const applyFilters = () => {   
+    setBudget(AdBudget);
+    setMeals(AdMeals);
+    setWalkingDistance(AdWalkingDistance);
+    setIntensity(AdIntensity);
     onClose();  // 필터 적용 후 Popover 창 닫기
   };
 
   const handleBudgetChange = (e) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
-      setBudget(value);
+      setAdBudget(value);
     }
   };
 
   const toggleMealSelection = (meal) => {
-    setMeals((prev) => 
+    setAdMeals((prev) => 
       prev.includes(meal) ? prev.filter(m => m !== meal) : [...prev, meal]
     );
   };
@@ -54,7 +55,7 @@ const AdvancedSearch = ({ setAdvancedSearchOptions, onClose }) => {
         <div className="flex items-center mt-2">
           <input
             type="text"
-            value={budget}
+            value={AdBudget}
             onChange={handleBudgetChange}
             className="p-2 border rounded w-3/5 text-sm"
           />
@@ -70,8 +71,8 @@ const AdvancedSearch = ({ setAdvancedSearchOptions, onClose }) => {
           {intensityOptions.map(option => (
             <Button
               key={option}
-              onClick={() => setIntensity(option)}
-              className={`p-2 border rounded-full text-xs ${isActive(option, [intensity]) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
+              onClick={() => setAdIntensity(option)}
+              className={`p-2 border rounded-full text-xs ${isActive(option, [AdIntensity]) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
               style={{ width: '60px', height: '40px' }}
             >
               {option}
@@ -84,18 +85,21 @@ const AdvancedSearch = ({ setAdvancedSearchOptions, onClose }) => {
       
       <div className="mb-4">
         <label className="block text-sm font-medium text-black bold">1일 도보 이동 거리 (km)</label>
-        <div className="mt-2 grid grid-cols-4 gap-2">
-          {walkingDistanceOptions.map(option => (
-            <Button
-              key={option}
-              onClick={() => setWalkingDistance(option)}
-              className={`p-2 border rounded-full text-xs ${isActive(option, [walkingDistance]) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
-              style={{ width: '60px', height: '40px' }}
-            >
-              {option}
-            </Button>
-          ))}
-        </div>
+          <Slider
+            defaultValue={[AdWalkingDistance[0], AdWalkingDistance[1]]}
+            onValueChange={setAdWalkingDistance}
+            min={0}
+            max={20}
+            step={1}
+            className="mt-2"
+          />
+          <div className="flex justify-between text-xs">
+            <span>0 km</span>
+            <span>20 km</span>
+          </div>
+          <div className="text-center text-gray-500 mt-2 text-xs">
+            <span>현재 설정 이동거리: {AdWalkingDistance[0]}km ~ {AdWalkingDistance[1]}km</span>
+          </div>
       </div>
       
       <hr className="my-4 border-grey" />
@@ -107,7 +111,7 @@ const AdvancedSearch = ({ setAdvancedSearchOptions, onClose }) => {
             <Button
               key={option}
               onClick={() => toggleMealSelection(option)}
-              className={`p-2 border rounded-full text-xs ${isActive(option, meals) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
+              className={`p-2 border rounded-full text-xs ${isActive(option, AdMeals) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
               style={{ width: '60px', height: '40px' }}
             >
               {option}
@@ -117,7 +121,11 @@ const AdvancedSearch = ({ setAdvancedSearchOptions, onClose }) => {
       </div>
       
       <div className="flex justify-center mt-4">
-        <Button onClick={applyFilters} className="bg-gray-700 text-white hover:bg-black">적용</Button>
+        <Button 
+          onClick={applyFilters}
+          className="bg-gray-700 text-white hover:bg-black">
+            적용
+        </Button>
       </div>
     </div>
   );
