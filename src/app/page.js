@@ -135,11 +135,11 @@ useEffect(() => {
   setSchedule(schedule_temp2);
 
   return (
-    <div className="w-full h-screen mx-auto flex flex-col bg-white">
-      <div className="bg-white relative mt-2 flex justify-end mr-2">
+    <div className="w-full h-screen mx-auto flex flex-col bg-image-1">
+      <div className="relative mt-2 flex justify-end mr-2">
         <Popover>
           <PopoverTrigger asChild>
-          <Button style={{ height: '50px' }} className="flex items-center bg-gray-200 border p-1 rounded-full"
+          <Button style={{ height: '50px' }} className="flex items-center opacity-50 bg-gray-200 border p-1 rounded-full"
           onClick = {() => {
             if (session) {
               toggleUserMenu();
@@ -180,12 +180,12 @@ useEffect(() => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col items-center w-full">
-        <h1 className="text-4xl font-bold mb-8 mt-4">여행 계획 세우기</h1>
+        <h1 className="text-4xl font-bold mb-8 mt-4 text-white">여행 계획 세우기</h1>
         <div className="w-full flex justify-center">
           <SearchBar className="w-3/5" />
         </div>
       </main>
-      <div className="bg-white p-4 relative mt-1 flex justify-center">
+      <div className="p-4 relative mt-1 flex justify-center">
         <Popover>
           <PopoverTrigger asChild>
             <Button className="bg-gray-500 text-white ml-2" onClick={() => setIsPopoverOpen(true)}>고급 검색</Button>
@@ -197,8 +197,8 @@ useEffect(() => {
           )}
         </Popover>
       </div>
-      <div className="flex w-4/5 justify-center bg-white text-2xl font-bold text-black ml-7 mt-8">
-        <div className="w-4/5">
+      <div className="flex w-4/5 justify-center text-2xl font-bold text-black ml-7 mt-8">
+        <div className="text-white w-4/5">
           이런 일정은 어떠세요?
         </div>
         <div className="flex flex-row w-1/5">
@@ -206,11 +206,11 @@ useEffect(() => {
           <DownloadButton text="엑셀 다운로드" filename="MySchedule.csv" />
         </div>
       </div>
-      <div className="flex w-4/5 bg-gray-200 p-4 overflow-auto text-black mt-2 mx-auto">
+      <div className="flex w-4/5 p-4 overflow-auto text-black mt-2 mx-auto">
         <div className="w-3/5 h-96 pr-4 overflow-auto">
           <Schedule />
         </div>
-        <div className="w-2/5 h-96 flex flex-col bg-gray-300 p-2 overflow-auto">
+        <div className="w-2/5 h-96 flex flex-col p-2 overflow-auto">
           <Chat messages={messages} loading={loading} onSendMessage={handleSend} />
         </div>
         <div ref={messagesEndRef} />
