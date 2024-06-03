@@ -47,6 +47,11 @@ export default function Home() {
     setIsPopoverOpen(prevState => !prevState);
   }, []);
 
+
+const closePopover = useCallback(() => {
+  setIsPopoverOpen(false);
+}, []);
+
   const toggleUserMenu = () => {
     setShowUserMenu(!showUserMenu);
   };
@@ -121,11 +126,11 @@ export default function Home() {
   }, []);
 
     // Popover 상태 변화에 따른 사이드 이펙트
-    useEffect(() => {
-      if (isPopoverOpen) {
-        // Popover가 열릴 때의 사이드 이펙트 처리
-      }
-    }, [isPopoverOpen]);
+useEffect(() => {
+  if (!isPopoverOpen) {
+    setIsPopoverOpen(false);
+  }
+}, [isPopoverOpen]);
 
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-white">
@@ -183,11 +188,11 @@ export default function Home() {
       <div className="bg-white p-4 relative mt-1 flex justify-center">
         <Popover>
           <PopoverTrigger asChild>
-            <Button className="bg-gray-500 text-white ml-2" onClick={togglePopover}>고급 검색</Button>
+            <Button className="bg-gray-500 text-white ml-2" onClick={() => setIsPopoverOpen(true)}>고급 검색</Button>
           </PopoverTrigger>
           {isPopoverOpen && (
             <PopoverContent align="center" style={{ width: '380px', padding: '20px', maxHeight: '420px', overflowY: 'auto' }}>
-              <AdvancedSearch setAdvancedSearchOptions={setAdvancedSearchOptions} onClose={togglePopover} />
+              <AdvancedSearch setAdvancedSearchOptions={setAdvancedSearchOptions} onClose={closePopover} />
             </PopoverContent>
           )}
         </Popover>
