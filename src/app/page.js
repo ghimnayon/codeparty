@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -137,7 +137,15 @@ useEffect(() => {
       <div className="bg-white relative mt-2 flex justify-end mr-2">
         <Popover>
           <PopoverTrigger asChild>
-          <Button style={{ width: '85px', height: '50px' }} className="flex items-center bg-gray-200 border p-1 rounded-full" onClick={togglePopover}>
+          <Button style={{ width: '85px', height: '50px' }} className="flex items-center bg-gray-200 border p-1 rounded-full"
+          onClick = {() => {
+            if (session) {
+              toggleUserMenu();
+            } else {
+              signIn("kakao");
+            }
+          }}>
+            
             <div className="flex flex-col justify-center items-center mr-1 ml-3">
               <div style={{ width: '15px', height: '1.5px', backgroundColor: 'gray', marginBottom: '3px' }}></div>
               <div style={{ width: '15px', height: '1.5px', backgroundColor: 'gray', marginBottom: '3px' }}></div>
