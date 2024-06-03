@@ -9,12 +9,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 import AdvancedSearch from "@/components/advancedSearch/AdvancedSearch";
 
-import { Schedule, schedule_temp, schedule_temp2 } from "@/components/schedule/Schedule";
+import { Schedule, schedule_temp2 } from "@/components/schedule/Schedule";
 import { DownloadButton } from "@/components/schedule/scheduleDownload";
 
 import { Chat } from "@/components/chat/Chat";
 
-import { useSchedule, updateSchedule } from "@/components/schedule/ScheduleContext";
+import { useSchedule } from "@/components/schedule/ScheduleContext";
 
 import Head from 'next/head';
 import SearchBar from '@/components/SearchBar';
@@ -43,12 +43,8 @@ export default function Home() {
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
-  const openPopover = () => {
-    setIsPopoverOpen(true);
-  }
-
-  const closePopover = () => {
-    setIsPopoverOpen(false);
+  const togglePopover = () => {
+    setIsPopoverOpen(!isPopoverOpen);
   };
 
   const toggleUserMenu = () => {
@@ -127,36 +123,44 @@ export default function Home() {
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-white">
       <div className="bg-white relative mt-2 flex justify-end mr-2">
-        {session && (
-          <>
-            <button
-              className="bg-gray-500 text-white p-1 rounded mr-2"
-              onClick={toggleUserMenu}
-            >
-              {session.user.name}
-            </button>
-            {showUserMenu && (
-              <div className="absolute top-full right-0 w-1/3 bg-white shadow-lg p-4 z-10">
-                <UserMenu />
-              </div>
-            )}
-          </>
-        )}
-        {session ? (
-          <button
-            className="bg-gray-500 text-white p-1 rounded"
-            onClick={() => signOut()}
-          >
-            로그아웃
-          </button>
-        ) : (
-          <button
-            className="bg-gray-500 text-white p-1 rounded"
-            onClick={() => router.push("/login")}
-          >
-            로그인
-          </button>
-        )}
+        <Popover>
+          <PopoverTrigger asChild>
+          <Button style={{ width: '85px', height: '50px' }} className="flex items-center bg-gray-200 border p-1 rounded-full" onClick={togglePopover}>
+            <div className="flex flex-col justify-center items-center mr-1 ml-3">
+              <div style={{ width: '15px', height: '1.5px', backgroundColor: 'gray', marginBottom: '3px' }}></div>
+              <div style={{ width: '15px', height: '1.5px', backgroundColor: 'gray', marginBottom: '3px' }}></div>
+              <div style={{ width: '15px', height: '1.5px', backgroundColor: 'gray' }}></div>
+            </div>
+            <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
+               <img src="/profileicon.png" alt="User Icon" style={{ width: '100%', height: '100%' }} />
+            </div>
+          </Button>
+
+          </PopoverTrigger>
+          {isPopoverOpen && (
+            <PopoverContent align="end" className="w-48 bg-white p-2 shadow-lg">
+              {!session ? (
+                <Button className="w-full bg-gray-500 text-white p-2 rounded" onClick={() => router.push("/login")}>
+                  로그인
+                </Button>
+              ) : (
+                <>
+                  <Button className="w-full bg-gray-500 text-white p-2 rounded mb-2" onClick={toggleUserMenu}>
+                    {session.user.name}
+                  </Button>
+                  <Button className="w-full bg-gray-500 text-white p-2 rounded" onClick={() => signOut()}>
+                    로그아웃
+                  </Button>
+                  {showUserMenu && (
+                    <div className="mt-2">
+                      <UserMenu />
+                    </div>
+                  )}
+                </>
+              )}
+            </PopoverContent>
+          )}
+        </Popover>
       </div>
       <Head>
         <title>Travel Search</title>
@@ -170,16 +174,16 @@ export default function Home() {
         </div>
       </main>
       <div className="bg-white p-4 relative mt-1 flex justify-center">
-      <Popover>
-  <PopoverTrigger asChild>
-    <Button className="bg-gray-500 text-white ml-2" onClick={openPopover}>고급 검색</Button>
-  </PopoverTrigger>
-  {isPopoverOpen && (
-    <PopoverContent align="center" style={{ width: '380px', padding: '20px', maxHeight: '420px', overflowY: 'auto' }}>
-      <AdvancedSearch setAdvancedSearchOptions={setAdvancedSearchOptions} onClose={closePopover} />
-    </PopoverContent>
-  )}
-</Popover>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button className="bg-gray-500 text-white ml-2" onClick={togglePopover}>고급 검색</Button>
+          </PopoverTrigger>
+          {isPopoverOpen && (
+            <PopoverContent align="center" style={{ width: '380px', padding: '20px', maxHeight: '420px', overflowY: 'auto' }}>
+              <AdvancedSearch setAdvancedSearchOptions={setAdvancedSearchOptions} onClose={togglePopover} />
+            </PopoverContent>
+          )}
+        </Popover>
       </div>
       <div className="bg-white text-2xl font-bold text-black ml-7 mt-8">
         이런 일정은 어떠세요?
