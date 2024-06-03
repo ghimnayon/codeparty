@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -43,9 +43,9 @@ export default function Home() {
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
-  const togglePopover = () => {
-    setIsPopoverOpen(!isPopoverOpen);
-  };
+  const togglePopover = useCallback(() => {
+    setIsPopoverOpen(prevState => !prevState);
+  }, []);
 
   const toggleUserMenu = () => {
     setShowUserMenu(!showUserMenu);
@@ -119,6 +119,13 @@ export default function Home() {
   useEffect(() => {
     handleReset();
   }, []);
+
+    // Popover 상태 변화에 따른 사이드 이펙트
+    useEffect(() => {
+      if (isPopoverOpen) {
+        // Popover가 열릴 때의 사이드 이펙트 처리
+      }
+    }, [isPopoverOpen]);
 
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-white">
