@@ -137,7 +137,7 @@ useEffect(() => {
       <div className="bg-white relative mt-2 flex justify-end mr-2">
         <Popover>
           <PopoverTrigger asChild>
-          <Button style={{ width: '85px', height: '50px' }} className="flex items-center bg-gray-200 border p-1 rounded-full"
+          <Button style={{ height: '50px' }} className="flex items-center bg-gray-200 border p-1 rounded-full"
           onClick = {() => {
             if (session) {
               toggleUserMenu();
@@ -145,7 +145,7 @@ useEffect(() => {
               signIn("kakao");
             }
           }}>
-            
+
             <div className="flex flex-col justify-center items-center mr-1 ml-3">
               <div style={{ width: '15px', height: '1.5px', backgroundColor: 'gray', marginBottom: '3px' }}></div>
               <div style={{ width: '15px', height: '1.5px', backgroundColor: 'gray', marginBottom: '3px' }}></div>
@@ -153,6 +153,9 @@ useEffect(() => {
             </div>
             <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
                <img src="/profileicon.png" alt="User Icon" style={{ width: '100%', height: '100%' }} />
+            </div>
+            <div className="mr-4">
+              {session?(session.user.name):"로그인"}
             </div>
           </Button>
 
