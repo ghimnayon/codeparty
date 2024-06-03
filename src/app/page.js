@@ -160,16 +160,14 @@ useEffect(() => {
           </Button>
 
           </PopoverTrigger>
-          {isPopoverOpen && (
+          {showUserMenu && (
             <PopoverContent align="end" className="w-48 bg-white p-2 shadow-lg">
               <Button className="w-full bg-gray-500 text-white p-2 rounded" onClick={() => signOut()}>
                     로그아웃
               </Button>
-              {showUserMenu && (
-                <div className="mt-2">
-                  <UserMenu />
-                </div>
-              )}
+              <div className="mt-2">
+                <UserMenu />
+              </div>
             </PopoverContent>
           )}
         </Popover>
