@@ -25,8 +25,6 @@ export default function Home() {
 
   const [count, setCount] = useState(1);
   const [displayCount, setDisplayCount] = useState("인원");
-  const [advancedSearch, setAdvancedSearch] = useState(false);
-  const [advancedSearchOptions, setAdvancedSearchOptions] = useState({});
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const { schedule, setSchedule } = useSchedule();
@@ -34,17 +32,6 @@ export default function Home() {
   const applyCount = () => {
     setDisplayCount(`인원: ${count}명`);
   };
-
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
-  const togglePopover = useCallback(() => {
-    setIsPopoverOpen(prevState => !prevState);
-  }, []);
-
-
-  const closePopover = useCallback(() => {
-    setIsPopoverOpen(false);
-  }, []);
 
   const toggleUserMenu = () => {
     setShowUserMenu(!showUserMenu);
@@ -120,11 +107,7 @@ export default function Home() {
   }, []);
 
     // Popover 상태 변화에 따른 사이드 이펙트
-useEffect(() => {
-  if (!isPopoverOpen) {
-    setIsPopoverOpen(false);
-  }
-}, [isPopoverOpen]);
+  setSchedule(schedule_temp2);
 
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-white">
@@ -173,7 +156,7 @@ useEffect(() => {
       </Head>
       <main className="flex flex-col items-center w-full">
         <h1 className="text-4xl font-bold mb-8 mt-4">여행 계획 세우기</h1>
-        <SearchBar></SearchBar>
+        <SearchBar className='w-3/5' />
       </main>
       <div className="bg-white text-2xl font-bold text-black ml-7 mt-8">
         이런 일정은 어떠세요?
