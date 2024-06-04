@@ -1,6 +1,4 @@
 // components/SearchBar.js
-require('dotenv').config()
-
 import { useState, useRef } from 'react';
 import { Popover as HeadlessPopover } from '@headlessui/react'; // npm install @headlessui/react
 
@@ -13,7 +11,7 @@ import '@/styles/datepicker.css';
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-const SearchBar = () => {
+const SearchBar = ({onSearch}) => {
   const [location, setLocation] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -60,10 +58,6 @@ const SearchBar = () => {
       meals,
       intensity,
       walkingDistance,
-      location,
-      startDate,
-      endDate,
-      guests,
     });
     closePopover();  // 필터 적용 후 Popover 창 닫기
   };
@@ -84,15 +78,15 @@ const SearchBar = () => {
   const isActive = (option, state) => state.includes(option);
 
    // Generative AI Call to fetch text insights
-   async function aiRun() {
-    setLoading(true);
-    setResponse('');
-
-    const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro"});
+   function aiRun() {
+    
+    prompt = "다음 내용을 바탕으로 여행 일정을 만들어 줘 : 위치 : 서울대학교, 기간 : 2024-06-05부터 2024-06-06까지, 인원 : 4명";
+    onSearch(prompt);
+    return;
 
     if(advancedSearchOptions) {
-      const { budget, meals, intensity, walkingDistance, location, startDate, endDate, guest } = advancedSearchOptions;
-
+      const { budget, meals, intensity, walkingDistance } = advancedSearchOptions;
+      
       const prompt = `
         다음 내용을 바탕으로 여행 일정을 만들어 줘:
         위치: ${location}
@@ -103,15 +97,13 @@ const SearchBar = () => {
         여행강도: ${intensity}이고, 여행강도는 1이 가장 강도가 낮은 여행이고 3이 가장 높은 여행이야
         1일 도보 이동거리: ${walkingDistance}
         `;
-      
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const text = await response.text();
-      setResponse(text);
-      setLoading(false);
     } else {
-      console.warn('advancedSearchOption is undefined');
-      setLoading(false);
+      const prompt = `
+        다음 내용을 바탕으로 여행 일정을 만들어 줘:
+        위치: ${location}
+        기간: ${startDate ? startDate.toLocaleDateString() : ''}부터 ${endDate ? endDate.toLocaleDateString() : ''}까지
+        인원: ${guests}명
+        `;
     }
   }
 

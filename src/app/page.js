@@ -48,9 +48,9 @@ export default function Home() {
   }, []);
 
 
-const closePopover = useCallback(() => {
-  setIsPopoverOpen(false);
-}, []);
+  const closePopover = useCallback(() => {
+    setIsPopoverOpen(false);
+  }, []);
 
   const toggleUserMenu = () => {
     setShowUserMenu(!showUserMenu);
@@ -70,6 +70,7 @@ const closePopover = useCallback(() => {
     const updatedMessages = [...messages, message];
     setMessages(updatedMessages);
     setLoading(true);
+    console.log(updatedMessages);
     const response = await fetch("/api/gemini", {
       method: "POST",
       headers: {
@@ -101,10 +102,20 @@ const closePopover = useCallback(() => {
 
     setLoading(false);
     setMessages((messages) => [...messages, result]);
-    setSchedule(schedule_temp2);
 
-    return;
+    return result;
   };
+
+  function handleSearch (prompt) {
+    handleReset();
+    const message = {
+        role: "user",
+        parts: [{ text: prompt}]
+    };
+    console.log(message);
+    const response = handleSend(message);
+    console.log(response);
+  }
 
   const handleReset = () => {
     setMessages([
@@ -182,7 +193,7 @@ useEffect(() => {
       <main className="flex flex-col items-center w-full">
         <h1 className="text-4xl font-bold mb-8 mt-4 text-white">여행 계획 세우기</h1>
         <div className="w-full flex justify-center">
-          <SearchBar className="w-3/5" />
+          <SearchBar onSearch={handleSearch} className="w-3/5" />
         </div>
       </main>
       <div className="p-4 relative mt-1 flex justify-center">
