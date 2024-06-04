@@ -2,7 +2,7 @@
 require('dotenv').config()
 
 import { useState, useRef } from 'react';
-import { Popover } from '@headlessui/react'; // npm install @headlessui/react
+import { Popover as HeadlessPopover } from '@headlessui/react'; // npm install @headlessui/react
 
 import { CalendarIcon, UserIcon, LocationMarkerIcon, SearchIcon } from '@heroicons/react/solid'; //npm install @heroicons/react@v1
 import DatePicker from 'react-datepicker'; // npm install react-datepicker. 오류나면 npm install react-datepicker --legacy-peer-deps
@@ -12,9 +12,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '@/styles/datepicker.css';
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-// import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const SearchBar = () => {
   const [location, setLocation] = useState('');
@@ -190,7 +187,7 @@ const SearchBar = () => {
         </button>
       </div>
       
-      <div className="bg-white p-4 relative mt-1 flex justify-center">
+      <div className="p-4 relative mt-1 flex justify-center">
         <Popover>
           <PopoverTrigger asChild>
             <Button className="bg-gray-500 text-white ml-2" onClick={togglePopover}>

@@ -186,16 +186,6 @@ useEffect(() => {
         </div>
       </main>
       <div className="p-4 relative mt-1 flex justify-center">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button className="bg-gray-500 text-white ml-2" onClick={() => setIsPopoverOpen(true)}>고급 검색</Button>
-          </PopoverTrigger>
-          {isPopoverOpen && (
-            <PopoverContent align="center" style={{ width: '380px', padding: '20px', maxHeight: '420px', overflowY: 'auto' }}>
-              <AdvancedSearch setAdvancedSearchOptions={setAdvancedSearchOptions} onClose={closePopover} />
-            </PopoverContent>
-          )}
-        </Popover>
       </div>
       <div className="flex w-4/5 justify-center text-2xl font-bold text-black ml-7 mt-8">
         <div className="text-white w-4/5">
