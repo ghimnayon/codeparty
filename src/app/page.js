@@ -183,7 +183,7 @@ useEffect(() => {
 
           </PopoverTrigger>
           {showUserMenu && (
-            <PopoverContent align="end" className="w-48 bg-white p-2 shadow-lg">
+            <PopoverContent align="end" className="w-96 bg-white p-2 shadow-lg">
               <Button className="w-full bg-gray-500 text-white p-2 rounded" onClick={() => signOut()}>
                     로그아웃
               </Button>

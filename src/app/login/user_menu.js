@@ -1,75 +1,121 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { schedule_temp2 } from "@/components/schedule/Schedule";
 import { useRouter } from "next/navigation";
 import { Schedule } from "@/components/schedule/Schedule"; // Schedule 컴포넌트를 import
 import { useSchedule } from "@/components/schedule/ScheduleContext"; // ScheduleContext를 사용하기 위해 import
 
-export function UserMenu() {
+import { db } from "@/firebase";
+import {
+  collection,
+  query,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  Timestamp,
+  orderBy,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
+
+const scheduleCollection = collection(db, "todos");
+
+
+export const UserMenu = () => {
+
   const [schedules, setSchedules] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
-  const router = useRouter();
+  const [title, setTitle] = useState("");
   const { schedule, setSchedule } = useSchedule(); // useSchedule 훅을 사용
 
+  const { data } = useSession();
+  const q = query(scheduleCollection, where("userName", "==", data?.user?.name), orderBy('created'));
+
+  // Fetch schedules from Firestore
   useEffect(() => {
-    // 로그인한 사용자의 스케줄 데이터를 가져오는 로직을 추가
-    // 예: fetch("/api/schedules").then((res) => res.json()).then((data) => setSchedules(data));
+    setSchedule(schedule_temp2);
     const fetchSchedules = async () => {
-      try {
-        const response = await fetch("/api/schedules"); // 이 엔드포인트는 예시입니다.
-        const data = await response.json();
-        setSchedules(data);
-      } catch (error) {
-        console.error("Failed to fetch schedules:", error);
-      }
+      const querySnapshot = await getDocs(collection(db, "schedules"));
+      const fetchedSchedules = querySnapshot.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id
+      }));
+      setSchedules(fetchedSchedules);
     };
 
     fetchSchedules();
+
+    // Subscribe to real-time updates
+    const unsubscribe = onSnapshot(collection(db, "schedules"), (snapshot) => {
+      const updatedSchedules = snapshot.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id
+      }));
+      setSchedules(updatedSchedules);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const handleScheduleClick = (schedule) => {
-    setSelectedSchedule(schedule);
-    setSchedule(schedule); // 선택한 스케줄을 ScheduleContext에 설정
+  // Handle schedule selection
+  const handleSelectSchedule = (item) => {
+    setSelectedSchedule(item);
+    setSchedule(item.schedule);
   };
 
-  const handleCloseDetails = () => {
-    setSelectedSchedule(null);
+  // Handle save schedule
+  const handleSave = async () => {
+    if (!title.trim()) {
+      alert("Title is required");
+      return;
+    }
+
+    try {
+      const newSchedule = {
+        username: data.user.name, // Replace with actual username logic
+        title,
+        created: new Date(),
+        schedule
+      };
+
+      await addDoc(collection(db, "schedules"), newSchedule);
+      setTitle(""); // Clear the input after saving
+    } catch (error) {
+      console.error("Error saving schedule: ", error);
+    }
   };
 
   return (
-    <div className="w-full h-full p-4">
-      {selectedSchedule ? (
-        <div className="p-4 bg-white shadow-lg rounded">
-          <h2 className="text-xl font-bold mb-4">{selectedSchedule.title}</h2>
-          <p>{selectedSchedule.description}</p>
-          {/* 추가적인 스케줄 상세 정보를 표시 */}
-          <button
-            className="mt-4 p-2 bg-gray-500 text-white rounded"
-            onClick={handleCloseDetails}
+    <div className="flex flex-col">
+      <div className="w-full bg-gray-200 text-center"> 내 일정 </div> 
+    
+      <div className="flex flex-row">
+        <input
+          className="w-4/5 text-center b-2"
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Enter schedule title"
+        />  
+        <button className="w-1/5" onClick={handleSave}>Save</button>
+      </div>
+  
+      <ul>
+        {schedules.map((scheduleItem) => (
+          <li
+            key={scheduleItem.id}
+            onClick={() => handleSelectSchedule(scheduleItem)}
+            style={{ background: selectedSchedule?.id === scheduleItem.id ? 'lightgray' : 'white' }}
           >
-            닫기
-          </button>
-          <div className="mt-4">
-            <Schedule />
-          </div>
-        </div>
-      ) : (
-        <div className="p-4 bg-white shadow-lg rounded">
-          <h2 className="text-xl font-bold mb-4">일정</h2>
-          <ul className="space-y-2">
-            {schedules.map((schedule) => (
-              <li key={schedule.id}>
-                <button
-                  className="w-full p-2 bg-gray-200 hover:bg-gray-300 rounded"
-                  onClick={() => handleScheduleClick(schedule)}
-                >
-                  {schedule.title}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+            {scheduleItem.title}
+          </li>
+        ))}
+      </ul>
+      <button className="w-full bg-green-100" onClick={() => setSchedule(selectedSchedule?.schedule)}>Load</button>
     </div>
   );
-}
+};
