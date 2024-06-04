@@ -114,7 +114,7 @@ export default function Home() {
       <div className="bg-white relative mt-2 flex justify-end mr-2">
         <Popover>
           <PopoverTrigger asChild>
-          <Button style={{ height: '50px' }} className="flex items-center bg-gray-200 border p-1 rounded-full"
+          <Button style={{ height: '50px' }} className="flex items-center bg-gray-300 border p-1 rounded-full"
           onClick = {() => {
             if (session) {
               toggleUserMenu();
@@ -131,7 +131,7 @@ export default function Home() {
             <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
                <img src="/profileicon.png" alt="User Icon" style={{ width: '100%', height: '100%' }} />
             </div>
-            <div className="mr-4">
+            <div className="mr-4 text-extrabold">
               {session?(session.user.name):"로그인"}
             </div>
           </Button>
