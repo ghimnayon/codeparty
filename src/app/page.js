@@ -101,7 +101,7 @@ export default function Home() {
       // '{"answer": "서울대학교를 중심으로 2일 동안 4명이 함께 할 수 있는 일정입니다! 젊음이 넘치는 대학로에서 연극도 보고, 맛집도 즐겨보세요. 서울대학교의 아름다운 캠퍼스도 거닐고, 근처 낙산공원에서 서울의 야경도 감상하는 것을 추천합니다. ", "schedule": [{"date": "06-05", "time": "11:00", "dest": "서울대학교", "content": "서울대학교 캠퍼스 탐방", "address": "서울특별시 관악구 관악로 1 서울대학교", "cost": "0만원", "duration": "120분"}, {"date": "06-05", "time": "13:00", "dest": "샤로수길", "content": "점심 식사, 샤로수길 맛집 탐방", "address": "서울특별시 관악구 관악로14길", "cost": "2만원", "duration": "60분"}, {"date": "06-05", "time": "15:00", "dest": "낙산공원", "content": "낙산공원 산책 및 서울 풍경 감상", "address": "서울특별시 종로구 동숭동 50", "cost": "0만원", "duration": "90분"}, {"date": "06-05", "time": "17:00", "dest": "대학로 연극", "content": "대학로에서 연극 관람", "address": "서울특별시 종로구 동숭동", "cost": "2만원", "duration": "120분"}, {"date": "06-05", "time": "19:00", "dest": "대학로", "content": "저녁 식사, 대학로 맛집 탐방", "address": "서울특별시 종로구 대학로", "cost": "2만원", "duration": "60분"}, {"date": "06-06", "time": "11:00", "dest": "서울대학교 미술관", "content": "서울대학교 미술관 관람", "address": "서울특별시 관악구 관악로 1 서울대학교", "cost": "0만원", "duration": "60분"}, {"date": "06-06", "time": "13:00", "dest": "샤로수길", "content": "점심 식사, 샤로수길 맛집 탐방", "address": "서울특별시 관악구 관악로14길", "cost": "2만원", "duration": "60 분"}]}\n' + '```'
       const resultJson = JSON.parse(result.parts[0].text.replace('```json', '').replace('```', '').replace('\\n', ''));
       // const resultJson = JSON.parse(text.replace('```json', '').replace('```', '').replace('\\n', ''));
-      const answer = {parts: [{text: resultJson["answer"]}]};
+      const answer = {role: "model", parts: [{text: resultJson["answer"]}]};
       // console.log(resultJson["schedule"]);
       setSchedule(resultJson["schedule"]);
       setLoading(false);
