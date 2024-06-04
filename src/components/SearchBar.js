@@ -8,7 +8,10 @@ import '@/styles/datepicker.css';
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
 const SearchBar = () => {
+  const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
   const [location, setLocation] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -18,6 +21,7 @@ const SearchBar = () => {
   const [intensity, setIntensity] = useState('');
   const [walkingDistance, setWalkingDistance] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [advancedSearchOptions, setAdvancedSearchOptions] = useState({});
   const checkInRef = useRef();
 
   const handleCheckOutClick = () => {
@@ -27,10 +31,7 @@ const SearchBar = () => {
   };
 
   const handleSearchClick = () => {
-    setLocation('');
-    setStartDate(null);
-    setEndDate(null);
-    setGuests(1);
+    aiRun();
   };
 
   const togglePopover = () => {
@@ -51,7 +52,17 @@ const SearchBar = () => {
   const intensityOptions = ["낮음", "보통", "높음"];
 
   const applyFilters = () => {
-    setIsPopoverOpen(false);
+    setAdvancedSearchOptions({
+      budget,
+      meals,
+      intensity,
+      walkingDistance,
+      location,
+      startDate,
+      endDate,
+      guests,
+    });
+    closePopover();  // 필터 적용 후 Popover 창 닫기
   };
 
   const handleBudgetChange = (e) => {
@@ -68,6 +79,38 @@ const SearchBar = () => {
   };
 
   const isActive = (option, state) => state.includes(option);
+
+   // Generative AI Call to fetch text insights
+   async function aiRun() {
+    setLoading(true);
+    setResponse('');
+
+    const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro"});
+
+    if(advancedSearchOptions) {
+      const { budget, meals, intensity, walkingDistance, location, startDate, endDate, guest } = advancedSearchOptions;
+
+      const prompt = `
+        다음 내용을 바탕으로 여행 일정을 만들어 줘:
+        위치: ${location}
+        기간: ${startDate ? startDate.toLocaleDateString() : ''}부터 ${endDate ? endDate.toLocaleDateString() : ''}까지
+        인원: ${guests}명
+        예산: ${budget}만원
+        식사 횟수: ${meals.join(', ')}
+        여행강도: ${intensity}이고, 여행강도는 1이 가장 강도가 낮은 여행이고 3이 가장 높은 여행이야
+        1일 도보 이동거리: ${walkingDistance}
+        `;
+      
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = await response.text();
+      setResponse(text);
+      setLoading(false);
+    } else {
+      console.warn('advancedSearchOption is undefined');
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="w-full flex-col items-center">
