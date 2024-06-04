@@ -70,7 +70,7 @@ export default function Home() {
     const updatedMessages = [...messages, message];
     setMessages(updatedMessages);
     setLoading(true);
-    console.log(updatedMessages);
+    {/* 
     const response = await fetch("/api/gemini", {
       method: "POST",
       headers: {
@@ -87,7 +87,7 @@ export default function Home() {
       setLoading(false);
       throw new Error(response.statusText);
     }
-
+    
     // 응답을 JSON 형태로 변환
     // 비동기 API 를 사용하여 응답을 받기 때문에 await 사용
     const result = await response.json();
@@ -95,15 +95,26 @@ export default function Home() {
     if (!result) {
       return;
     }
-
+    */}
+    if (message.role == "user") {
+      const text = '```json\n' +
+      '{"answer": "서울대학교를 중심으로 2일 동안 4명이 함께 할 수 있는 일정입니다! 젊음이 넘치는 대학로에서 연극도 보고, 맛집도 즐겨보세요. 서울대학교의 아름다운 캠퍼스도 거닐고, 근처 낙산공원에서 서울의 야경도 감상하는 것을 추천합니다. ", "schedule": [{"date": "06-05", "time": "11:00", "dest": "서울대학교", "content": "서울대학교 캠퍼스 탐방", "address": "서울특별시 관악구 관악로 1 서울대학교", "cost": "0만원", "duration": "120분"}, {"date": "06-05", "time": "13:00", "dest": "샤로수길", "content": "점심 식사, 샤로수길 맛집 탐방", "address": "서울특별시 관악구 관악로14길", "cost": "2만원", "duration": "60분"}, {"date": "06-05", "time": "15:00", "dest": "낙산공원", "content": "낙산공원 산책 및 서울 풍경 감상", "address": "서울특별시 종로구 동숭동 50", "cost": "0만원", "duration": "90분"}, {"date": "06-05", "time": "17:00", "dest": "대학로 연극", "content": "대학로에서 연극 관람", "address": "서울특별시 종로구 동숭동", "cost": "2만원", "duration": "120분"}, {"date": "06-05", "time": "19:00", "dest": "대학로", "content": "저녁 식사, 대학로 맛집 탐방", "address": "서울특별시 종로구 대학로", "cost": "2만원", "duration": "60분"}, {"date": "06-06", "time": "11:00", "dest": "서울대학교 미술관", "content": "서울대학교 미술관 관람", "address": "서울특별시 관악구 관악로 1 서울대학교", "cost": "0만원", "duration": "60분"}, {"date": "06-06", "time": "13:00", "dest": "샤로수길", "content": "점심 식사, 샤로수길 맛집 탐방", "address": "서울특별시 관악구 관악로14길", "cost": "2만원", "duration": "60 분"}]}\n' + '```'
+      // resultJson = JSON.parse(result.parts[0].
+      const resultJson = JSON.parse(text.replace('```json', '').replace('```', '').replace('\\n', ''));
+      const answer = {parts: [{text: resultJson["answer"]}]};
+      // console.log(resultJson["schedule"]);
+      setSchedule(resultJson["schedule"]);
+      setLoading(false);
+      setMessages((messages) => [...messages, answer]);
+    }
+    else {
+      const answer = result;
+      setLoading(false);
+      setMessages((messages) => [...messages, answer]);
+    }
     // 로딩 상태를 해제하고, 메시지 목록에 응답을 추가
-    setLoading(false);
-    setMessages((messages) => [...messages, result]);
 
-    setLoading(false);
-    setMessages((messages) => [...messages, result]);
-
-    return result;
+    return;
   };
 
   function handleSearch (prompt) {
@@ -112,9 +123,8 @@ export default function Home() {
         role: "user",
         parts: [{ text: prompt}]
     };
-    console.log(message);
-    const response = handleSend(message);
-    console.log(response);
+
+    handleSend(message);
   }
 
   const handleReset = () => {
@@ -124,7 +134,8 @@ export default function Home() {
         parts: [{ text: "안녕하세요? 여행전문가 트래블코드입니다. 어떤 여행을 원하세요?" }],
       },
     ]);
-  };
+  }; 
+
 
   // 메시지 목록이 업데이트 될 때마다 맨 아래로 스크롤
   useEffect(() => {
@@ -142,8 +153,6 @@ useEffect(() => {
     setIsPopoverOpen(false);
   }
 }, [isPopoverOpen]);
-
-  setSchedule(schedule_temp2);
 
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-image-1">
