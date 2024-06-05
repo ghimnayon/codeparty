@@ -30,7 +30,7 @@ export const DownloadButton = ({text, filename}) => {
 };
 
 export const jsonToCsv = (json) => {
-  const fields = ['date', 'time', 'dest', 'content', 'address', 'cost', 'duration'];
+  const fields = ['date', 'time', 'dest', 'content', 'cost', 'duration'];
   const opts = { fields };
 
   try {

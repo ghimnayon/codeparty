@@ -16,12 +16,13 @@ const systemInstruction =
   '{"answer": "여기에 너의 자연어 응답을 넣어주고", "schedule": "여기에 json 형식의 일정을 넣어줘."}' + 
   '와 같이 대답과 일정으로 구성된 json 방식으로 응답을 부탁해.' + 
   '일정은 반드시 다음과 같은 json 형식으로 대답해줘.' + 
-  '[{date: 05-01, time: 11:00, dest: 목적지, content: 내용, address: 목적지주소, cost: 5만원, duration: 70분}, ' + 
-  '{date: 05-01, time: 17:00, dest: 목적지, content: 내용, address: 목적지주소, cost: 6만원, duration: 20분}' +
+  '[{date: 05-01, time: 11:00, dest: 목적지, content: 내용, cost: 5만원, duration: 70분}, ' + 
+  '{date: 05-01, time: 17:00, dest: 목적지, content: 내용, cost: 6만원, duration: 20분}' +
   '날짜는 MM-DD 형식, 시간은 24시간 형식이고, 비용은 만원 단위로, duration은 10분 단위로 대답해줘. 무료여도 0만원으로 대답해줘.' + 
   '비용은 무조건 1인당 비용으로 계산해서 만원 단위로만 알려줘.' +
-  '장소의 경우 @Google 지도에 있는 장소만 추천해주고, 주소도 @Google 지도 기준으로 알려줘.' +
-  '형식을 꼭 지켜서 대답해줘. 대답과 일정 외에는 어떤 대답도 하지 말아줘.';
+  '장소의 경우 @Google 지도에 있는 장소만 추천해주고, 반드시 존재하는 장소인지 재확인하고 알려줘.' +
+  '어떤 대답을 하더라도 json 형식을 꼭 지켜서 대답해줘. 대답과 일정 외에는 어떤 대답도 하지 말아줘.' + 
+  '여행일정 외의 질문에는 대답하지 말아줘. 대신 거절의 말을 하더라도 json 형식은 반드시 지켜줘야 해.';
 
 export async function POST(req) {
   const model = genAI.getGenerativeModel({
@@ -63,7 +64,7 @@ export async function POST(req) {
   const result = await chat.sendMessage("");
   const response = await result.response;
   const text = response.text();
-  console.log(response.candidates[0].content);
+  // console.log(response.candidates[0].content);
   //   console.log(response.candidates[0].safetyRatings);
 
   return Response.json({
