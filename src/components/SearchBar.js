@@ -79,32 +79,26 @@ const SearchBar = ({onSearch}) => {
 
    // Generative AI Call to fetch text insights
    function aiRun() {
-    
-    prompt = "다음 내용을 바탕으로 여행 일정을 만들어 줘 : 위치 : 서울대학교, 기간 : 2024-06-05부터 2024-06-06까지, 인원 : 4명";
+    if(advancedSearchOptions == true) {
+      const{ budget, meals, intensity, walkingDistance } = advancedSearchOptions;
+
+      prompt = `다음 내용을 바탕으로 여행 일정을 만들어 줘:\n` +
+        `위치: ${location}\n` +
+        `기간: ${startDate ? startDate.toLocaleDateString() : ''}부터 ${endDate ? endDate.toLocaleDateString() : ''}까지\n` +
+        `인원: ${guests}명\n` +
+        `예산: ${budget}만원\n` +
+        `식사 횟수: ${meals.join(', ')}\n` +
+        `여행강도: ${intensity}이고, 여행강도는 1이 가장 강도가 낮은 여행이고 3이 가장 높은 여행이야\n` +
+        `1일 도보 이동거리: ${walkingDistance}`;
+    } else {
+      prompt = `다음 내용을 바탕으로 여행 일정을 만들어 줘:\n` +
+        `위치: ${location}\n` +
+        `기간: ${startDate ? startDate.toLocaleDateString() : ''}부터 ${endDate ? endDate.toLocaleDateString() : ''}까지\n` +
+        `인원: ${guests}명`;
+    }
+    // prompt = `다음 내용을 바탕으로 여행 일정을 만들어 줘 : 위치 : ${location}, 기간 : 2024-06-05부터 2024-06-06까지, 인원 : 4명`;
     onSearch(prompt);
     return;
-
-    if(advancedSearchOptions) {
-      const { budget, meals, intensity, walkingDistance } = advancedSearchOptions;
-      
-      const prompt = `
-        다음 내용을 바탕으로 여행 일정을 만들어 줘:
-        위치: ${location}
-        기간: ${startDate ? startDate.toLocaleDateString() : ''}부터 ${endDate ? endDate.toLocaleDateString() : ''}까지
-        인원: ${guests}명
-        예산: ${budget}만원
-        식사 횟수: ${meals.join(', ')}
-        여행강도: ${intensity}이고, 여행강도는 1이 가장 강도가 낮은 여행이고 3이 가장 높은 여행이야
-        1일 도보 이동거리: ${walkingDistance}
-        `;
-    } else {
-      const prompt = `
-        다음 내용을 바탕으로 여행 일정을 만들어 줘:
-        위치: ${location}
-        기간: ${startDate ? startDate.toLocaleDateString() : ''}부터 ${endDate ? endDate.toLocaleDateString() : ''}까지
-        인원: ${guests}명
-        `;
-    }
   }
 
   return (

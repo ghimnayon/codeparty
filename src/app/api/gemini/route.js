@@ -56,7 +56,7 @@ export async function POST(req) {
       // temperature 값이 높을 수록 AI 의 답변이 다양해짐
       temperature: 1,
       // max_tokens 값을 제한함. 이 값을 크게하면 컨텍스트 히스토리에 제약이 커짐.
-      maxOutputTokens: 1000,
+      maxOutputTokens: 5000,
     },
   });
 
