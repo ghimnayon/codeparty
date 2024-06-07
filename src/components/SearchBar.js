@@ -1,17 +1,13 @@
-// components/SearchBar.js
 import { useState, useRef } from 'react';
 import { Popover as HeadlessPopover } from '@headlessui/react'; // npm install @headlessui/react
-
-import { CalendarIcon, UserIcon, LocationMarkerIcon, SearchIcon } from '@heroicons/react/solid'; //npm install @heroicons/react@v1
+import { CalendarIcon, UserIcon, LocationMarkerIcon, SearchIcon, AdjustmentsIcon } from '@heroicons/react/solid'; // AdjustmentsIcon 추가
 import DatePicker from 'react-datepicker'; // npm install react-datepicker. 오류나면 npm install react-datepicker --legacy-peer-deps
-
-
 import 'react-datepicker/dist/react-datepicker.css';
 import '@/styles/datepicker.css';
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-const SearchBar = ({onSearch}) => {
+const SearchBar = ({ onSearch }) => {
   const [location, setLocation] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -24,7 +20,6 @@ const SearchBar = ({onSearch}) => {
   const [advancedSearchOptions, setAdvancedSearchOptions] = useState({});
   const checkInRef = useRef();
 
-  // 기존 SearchBar.js 영역
   const handleCheckOutClick = () => {
     if (checkInRef.current) {
       checkInRef.current.click();
@@ -44,7 +39,7 @@ const SearchBar = ({onSearch}) => {
   };
 
   const walkingDistanceOptions = [
-    "1km", "3km", "5km", "7km", 
+    "1km", "3km", "5km", "7km",
     "9km", "11km", "13km", "15km", "17km", "19km", "21km+"
   ];
 
@@ -70,17 +65,18 @@ const SearchBar = ({onSearch}) => {
   };
 
   const toggleMealSelection = (meal) => {
-    setMeals((prev) => 
+    setMeals((prev) =>
       prev.includes(meal) ? prev.filter(m => m !== meal) : [...prev, meal]
     );
   };
 
   const isActive = (option, state) => state.includes(option);
 
-   // Generative AI Call to fetch text insights
-   function aiRun() {
-    if(advancedSearchOptions == true) {
-      const{ budget, meals, intensity, walkingDistance } = advancedSearchOptions;
+  // Generative AI Call to fetch text insights
+  function aiRun() {
+    let prompt;
+    if (Object.keys(advancedSearchOptions).length > 0) {
+      const { budget, meals, intensity, walkingDistance } = advancedSearchOptions;
 
       prompt = `다음 내용을 바탕으로 여행 일정을 만들어 줘:\n` +
         `위치: ${location}\n` +
@@ -96,14 +92,13 @@ const SearchBar = ({onSearch}) => {
         `기간: ${startDate ? startDate.toLocaleDateString() : ''}부터 ${endDate ? endDate.toLocaleDateString() : ''}까지\n` +
         `인원: ${guests}명`;
     }
-    // prompt = `다음 내용을 바탕으로 여행 일정을 만들어 줘 : 위치 : ${location}, 기간 : 2024-06-05부터 2024-06-06까지, 인원 : 4명`;
     onSearch(prompt);
     return;
   }
 
   return (
-    <div className="w-full flex-col items-center">
-      <div className="flex justify-between items-center border rounded-full p-4 shadow-md w-2/3 mx-auto bg-white">
+    <div className="w-full flex-col items-center font-Pretendard">
+      <div className="flex justify-between items-center border rounded-full p-4 shadow-md w-2/3 mx-auto bg-white font-medium">
         <div className="flex items-center space-x-2">
           <LocationMarkerIcon className="h-5 w-5 text-gray-500" />
           <input
@@ -115,7 +110,7 @@ const SearchBar = ({onSearch}) => {
           />
         </div>
 
-        <HeadlessPopover className="relative">
+        <HeadlessPopover className="relative font-medium">
           <HeadlessPopover.Button ref={checkInRef} className="flex items-center space-x-2">
             <CalendarIcon className="h-5 w-5 text-gray-500" />
             <span>{startDate ? startDate.toLocaleDateString() : '체크인'}</span>
@@ -142,7 +137,7 @@ const SearchBar = ({onSearch}) => {
         </HeadlessPopover>
 
         <button
-          className="flex items-center space-x-2 ml-4"
+          className="flex items-center space-x-2 ml-4 font-medium"
           onClick={handleCheckOutClick}
         >
           <CalendarIcon className="h-5 w-5 text-gray-500" />
@@ -150,11 +145,11 @@ const SearchBar = ({onSearch}) => {
         </button>
 
         <HeadlessPopover className="relative">
-          <HeadlessPopover.Button className="flex items-center space-x-2">
+          <HeadlessPopover.Button className="flex items-center space-x-2 font-medium">
             <UserIcon className="h-5 w-5 text-gray-500" />
             <span>{guests > 1 ? `여행자 ${guests}명` : '여행자'}</span>
           </HeadlessPopover.Button>
-          <HeadlessPopover.Panel className="absolute z-10 p-4 shadow-lg rounded-lg w-40">
+          <HeadlessPopover.Panel className="absolute z-10 p-4 shadow-lg rounded-lg w-40 mt-4">
             <input
               type="number"
               value={guests}
@@ -165,104 +160,104 @@ const SearchBar = ({onSearch}) => {
           </HeadlessPopover.Panel>
         </HeadlessPopover>
 
-        <button
-          className="flex items-center justify-center bg-red-500 text-white p-2 rounded-full"
-          onClick={handleSearchClick}
-        >
-          <SearchIcon className="h-5 w-5" />
-        </button>
-      </div>
-      
-      <div className="p-4 relative mt-1 flex justify-center">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button className="bg-gray-500 text-white ml-2" onClick={togglePopover}>
-              고급 검색
-            </Button>
-          </PopoverTrigger>
-          {isPopoverOpen && (
-            <PopoverContent align="center" style={{ width: '380px', padding: '20px', maxHeight: '420px', overflowY: 'auto' }}>
-              <div className="relative p-4 rounded">
-                <button
-                  onClick={closePopover}
-                  className="absolute top-2 right-2 text-black"
-                >
-                  &#10005;
-                </button>
-                <div className="mb-2">
-                  <label className="block text-sm font-medium text-black bold">총 예산</label>
-                  <div className="flex items-center mt-2">
-                    <input
-                      type="text"
-                      value={budget}
-                      onChange={handleBudgetChange}
-                      className="p-2 border rounded w-3/5 text-sm"
-                    />
-                    <span className="ml-2 text-sm text-black bold">만원</span>
-                  </div>
-                </div>
-    
-                <hr className="my-4 border-grey" />
+        <div className="flex items-center space-x-2">
+          <button
+            className="flex items-center justify-center bg-red-500 text-white p-2 rounded-full"
+            onClick={handleSearchClick}
+          >
+            <SearchIcon className="h-5 w-5" />
+          </button>
 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-black bold">여행 강도</label>
-                  <div className="mt-2 grid grid-cols-4 gap-2">
-                    {intensityOptions.map(option => (
-                      <Button
-                        key={option}
-                        onClick={() => setIntensity(option)}
-                        className={`p-2 border rounded-full text-xs ${isActive(option, [intensity]) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
-                        style={{ width: '60px', height: '40px' }}
-                      >
-                        {option}
-                      </Button>
-                    ))}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" className="text-black ml-2 font-Pretendard font-medium" onClick={togglePopover}>
+                <AdjustmentsIcon className="h-5 w-5 text-black" />
+              </Button>
+            </PopoverTrigger>
+            {isPopoverOpen && (
+              <PopoverContent align="center" className="font-Pretendard" style={{ width: '360px', padding: '20px', maxHeight: '420px', overflowY: 'auto' }}>
+                <div className="relative p-5 rounded">
+                  <button
+                    onClick={closePopover}
+                    className="absolute top-2 right-2 text-black"
+                  >
+                    &#10005;
+                  </button>
+                  <div className="mb-3">
+                    <label className="block text-m font-semibold text-black bold mb-3">총 예산</label>
+                    <div className="flex items-center mt-2">
+                      <input
+                        type="text"
+                        value={budget}
+                        onChange={handleBudgetChange}
+                        className="p-2 border rounded w-3/5 text-sm"
+                      />
+                      <span className="ml-2 text-sm text-black bold">만원</span>
+                    </div>
                   </div>
-                </div>
 
-                <hr className="my-4 border-grey" />
-  
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-black bold">1일 도보 이동 거리 (km)</label>
-                   <div className="mt-2 grid grid-cols-4 gap-2">
-                    {walkingDistanceOptions.map(option => (
-                      <Button
-                        key={option}
-                        onClick={() => setWalkingDistance(option)}
-                        className={`p-2 border rounded-full text-xs ${isActive(option, [walkingDistance]) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
-                        style={{ width: '60px', height: '40px' }}
-                      >
-                        {option}
-                     </Button>
-                    ))}
+                  <hr className="my-4 border-grey" />
+
+                  <div className="mb-4">
+                    <label className="block text-m font-medium font-semibold text-black bold mb-3">여행 강도</label>
+                    <div className="mt-2 grid grid-cols-4 gap-2">
+                      {intensityOptions.map(option => (
+                        <Button
+                          key={option}
+                          onClick={() => setIntensity(option)}
+                          className={`p-2 border rounded-full text-xs ${isActive(option, [intensity]) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
+                          style={{ width: '60px', height: '40px' }}
+                        >
+                          {option}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <hr className="my-4 border-grey" />
+
+                  <div className="mb-4">
+                    <label className="block text-m font-medium font-semibold text-black bold mb-3">1일 도보 이동 거리 (km)</label>
+                    <div className="mt-2 grid grid-cols-4 gap-2">
+                      {walkingDistanceOptions.map(option => (
+                        <Button
+                          key={option}
+                          onClick={() => setWalkingDistance(option)}
+                          className={`p-2 border rounded-full text-xs ${isActive(option, [walkingDistance]) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
+                          style={{ width: '60px', height: '40px' }}
+                        >
+                          {option}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <hr className="my-4 border-grey" />
+
+                  <div className="mb-6">
+                    <label className="block text-m font-medium font-semibold text-black bold mb-3">식사 횟수</label>
+                    <div className="mt-2 grid grid-cols-4 gap-2">
+                      {mealsOptions.map(option => (
+                        <Button
+                          key={option}
+                          onClick={() => toggleMealSelection(option)}
+                          className={`p-2 border rounded-full text-xs ${isActive(option, meals) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
+                          style={{ width: '60px', height: '40px' }}
+                        >
+                          {option}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end mt-8">
+                    <Button onClick={applyFilters} variant="ghost" className="text-black font-thin text-xl font-Pretendard">적용하기</Button>
                   </div>
                 </div>
-    
-                 <hr className="my-4 border-grey" />
-    
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-black bold">식사 횟수</label>
-                  <div className="mt-2 grid grid-cols-4 gap-2">
-                    {mealsOptions.map(option => (
-                      <Button
-                        key={option}
-                        onClick={() => toggleMealSelection(option)}
-                        className={`p-2 border rounded-full text-xs ${isActive(option, meals) ? 'bg-black text-white' : 'bg-white text-black hover:bg-gray-300 hover:text-black'}`}
-                        style={{ width: '60px', height: '40px' }}
-                      >
-                        {option}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-    
-                <div className="flex justify-center mt-4">
-                  <Button onClick={applyFilters} className="bg-gray-700 text-white hover:bg-black">적용</Button>
-                </div>
-              </div>
-            </PopoverContent>
-          )}
-        </Popover>
+              </PopoverContent>
+            )}
+          </Popover>
+        </div>
       </div>
     </div>
   );

@@ -9,6 +9,12 @@ module.exports = {
   ],
   prefix: "",
   theme: {
+    extend: {
+      fontFamily: {
+        custom: ['CustomFont', 'sans-serif'],
+      },
+    },
+    
     container: {
       center: true,
       padding: "2rem",

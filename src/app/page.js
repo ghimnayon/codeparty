@@ -155,11 +155,11 @@ useEffect(() => {
 }, [isPopoverOpen]);
 
   return (
-    <div className="w-full h-screen mx-auto flex flex-col bg-image-1">
-      <div className="relative mt-2 flex justify-end mr-2">
+    <div className="w-full h-screen mx-auto flex flex-col bg-white font-Pretendard">
+      <div className="p-3 relative mt-2 flex justify-end mr-4">
         <Popover>
           <PopoverTrigger asChild>
-          <Button style={{ height: '50px' }} className="flex items-center opacity-50 bg-gray-200 border p-1 rounded-full"
+          <Button style={{ height: '50px' }} className="flex items-center opacity-100 bg-gray-700 border p-1 rounded-full"
           onClick = {() => {
             if (session) {
               toggleUserMenu();
@@ -176,7 +176,7 @@ useEffect(() => {
             <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
                <img src="/profileicon.png" alt="User Icon" style={{ width: '100%', height: '100%' }} />
             </div>
-            <div className="mr-4">
+            <div className="mr-4 text-extrabold text-white font-semibold">
               {session?(session.user.name):"로그인"}
             </div>
           </Button>
@@ -200,15 +200,15 @@ useEffect(() => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col items-center w-full">
-        <h1 className="text-4xl font-bold mb-8 mt-4 text-white">여행 계획 세우기</h1>
+        <h1 className="text-4xl font-bold mb-8 mt-4 text-black font-thin">여행 계획 세우기</h1>
         <div className="w-full flex justify-center">
           <SearchBar onSearch={handleSearch} className="w-3/5" />
         </div>
       </main>
       <div className="p-4 relative mt-1 flex justify-center">
       </div>
-      <div className="flex w-4/5 justify-center text-2xl font-bold text-black ml-7 mt-8">
-        <div className="text-white w-4/5">
+      <div className="flex w-4/5 p-4 justify-center text-2xl overflow-auto text-black mt-2 mx-auto">
+        <div className="text-black w-4/5 font-thin">
           이런 일정은 어떠세요?
         </div>
         <div className="flex flex-row w-1/5">
