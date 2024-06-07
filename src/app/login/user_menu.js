@@ -8,19 +8,6 @@ import { Schedule } from "@/components/schedule/Schedule"; // Schedule 컴포넌
 import { useSchedule } from "@/components/schedule/ScheduleContext"; // ScheduleContext를 사용하기 위해 import
 
 import { db } from "@/firebase";
-import {
-  collection,
-  query,
-  doc,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  Timestamp,
-  orderBy,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
 
 const scheduleCollection = collection(db, "todos");
 
@@ -65,28 +52,6 @@ export const UserMenu = () => {
   const handleSelectSchedule = (item) => {
     setSelectedSchedule(item);
     setSchedule(item.schedule);
-  };
-
-  // Handle save schedule
-  const handleSave = async () => {
-    if (!title.trim()) {
-      alert("Title is required");
-      return;
-    }
-
-    try {
-      const newSchedule = {
-        username: data.user.name, // Replace with actual username logic
-        title,
-        created: new Date(),
-        schedule
-      };
-
-      await addDoc(collection(db, "schedules"), newSchedule);
-      setTitle(""); // Clear the input after saving
-    } catch (error) {
-      console.error("Error saving schedule: ", error);
-    }
   };
 
   return (
