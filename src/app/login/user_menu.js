@@ -156,7 +156,7 @@ export const UserMenu = () => {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="일정의 제목을 입력하세요."
+              placeholder="일정의 제목을 입력하세요"
             />
             <div className="flex justify-end mt-4">
               <Button className="mr-2" onClick={() => setIsTitleModalOpen(false)}>
