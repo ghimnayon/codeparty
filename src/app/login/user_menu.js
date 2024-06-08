@@ -63,7 +63,7 @@ export const UserMenu = () => {
   const q = query(scheduleCollection, where("userName", "==", data?.user?.name), orderBy("created"));
 
   useEffect(() => {
-    setSchedule(schedule_temp2);
+    
     const fetchSchedules = async () => {
       const querySnapshot = await getDocs(collection(db, "schedules"));
       const fetchedSchedules = querySnapshot.docs.map(doc => ({
