@@ -27,6 +27,7 @@
     "react": "^18",
     "react-datepicker": "^6.9.0",
     "react-dom": "^18",
+    "react-icons": "^5.2.1",
     "react-popover": "^0.5.10",
     "react-tiny-popover": "^8.0.4",
     "tailwind-merge": "^2.3.0",

@@ -7,11 +7,11 @@ export const ChatBubble = ({ message }) => {
       }`}
     >
       <div
-        className={`flex items-center ${
+        className={`flex items-center font-Pretendard ${
           message.role === "model"
-            ? "bg-neutral-200 text-neutral-900"
-            : "bg-blue-500 text-white"
-        } rounded-2xl px-3 py-2 max-w-[67%] whitespace-pre-wrap`}
+            ? "bg-neutral-100 text-neutral-900 font-light"
+            : "bg-blue-500 text-white font-light"
+        } rounded-2xl px-4 py-3 max-w-[80%] whitespace-pre-wrap`}
         style={{ overflowWrap: "anywhere" }}
       >
         {message.parts[0].text}

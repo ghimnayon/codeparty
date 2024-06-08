@@ -98,7 +98,7 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <div className="w-full flex-col items-center font-Pretendard">
-      <div className="flex justify-between items-center border rounded-full p-4 shadow-md w-2/3 mx-auto bg-white font-medium">
+      <div className="flex justify-between items-center border rounded-full p-4 shadow-md mx-auto bg-white font-medium" style={{ width: '720px', height: '60px' }}>
         <div className="flex items-center space-x-2">
           <LocationMarkerIcon className="h-5 w-5 text-gray-500" />
           <input
@@ -115,7 +115,7 @@ const SearchBar = ({ onSearch }) => {
             <CalendarIcon className="h-5 w-5 text-gray-500" />
             <span>{startDate ? startDate.toLocaleDateString() : '체크인'}</span>
           </HeadlessPopover.Button>
-          <HeadlessPopover.Panel className="absolute z-10 p-4 rounded-lg w-96 -translate-x-1/2 mt-4">
+          <HeadlessPopover.Panel className="absolute z-10 p-5 shadow-lg rounded-xl w-120 -translate-x-1/3 ml-2 mt-8 shadow-lg bg-white">
             <div className="flex justify-around w-full">
               <DatePicker
                 selected={startDate}
@@ -147,22 +147,23 @@ const SearchBar = ({ onSearch }) => {
         <HeadlessPopover className="relative">
           <HeadlessPopover.Button className="flex items-center space-x-2 font-medium">
             <UserIcon className="h-5 w-5 text-gray-500" />
-            <span>{guests > 1 ? `여행자 ${guests}명` : '여행자'}</span>
+            <span>{guests > 1 ? `인원 ${guests}명` : '인원'}</span>
           </HeadlessPopover.Button>
-          <HeadlessPopover.Panel className="absolute z-10 p-4 shadow-lg rounded-lg w-40 mt-4">
+          <HeadlessPopover.Panel className="absolute z-10 p-4 shadow-lg rounded-lg mt-4" style = {{width : '80px', height : '40px'}}>
             <input
               type="number"
               value={guests}
               min="1"
               onChange={(e) => setGuests(e.target.value)}
               className="border p-2 rounded w-full"
+              style = {{width : '80px', height : '40px'}}
             />
           </HeadlessPopover.Panel>
         </HeadlessPopover>
 
         <div className="flex items-center space-x-2">
           <button
-            className="flex items-center justify-center bg-red-500 text-white p-2 rounded-full"
+            className="flex items-center justify-center bg-blue-500 text-white p-2 rounded-full"
             onClick={handleSearchClick}
           >
             <SearchIcon className="h-5 w-5" />

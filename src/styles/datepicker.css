@@ -4,13 +4,14 @@
     font-family: 'Arial', sans-serif;
     border: none;
     box-shadow: none;
-    display: flex; /* Add this line */
-    flex-direction: row; /* Add this line */
+    display: flex; 
+    flex-direction: row; 
 }
 
 .react-datepicker__header {
     background-color: white;
     border-bottom: none;
+    box-shadow: none; 
 }
 
 .react-datepicker__current-month {
@@ -29,17 +30,19 @@
 }
 
 .react-datepicker__day--selected, .react-datepicker__day--in-range {
-    background-color: #FF385C;
+    background-color: #3B82F6; /* Change to blue */
     color: white;
+    border-radius: 50%; /* Make it a circle */
 }
 
 .react-datepicker__day--keyboard-selected {
-    background-color: #FF385C;
+    background-color: #3B82F6; /* Change to blue */
     color: white;
+    border-radius: 50%; /* Make it a circle */
 }
 
-
 .react-datepicker__day:hover {
-    background-color: #FF385C;
+    background-color: #3B82F6; /* Change to blue */
     color: white;
+    border-radius: 50%; /* Make it a circle */
 }

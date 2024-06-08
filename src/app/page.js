@@ -212,7 +212,7 @@ useEffect(() => {
           이런 일정은 어떠세요?
         </div>
         <div className="flex flex-row w-1/5">
-          <DownloadButton text="엑셀 다운로드" filename="MySchedule.csv" />
+          <DownloadButton filename="MySchedule.csv" />
         </div>
       </div>
       <div className="flex w-4/5 p-4 overflow-auto text-black mt-2 mx-auto">
