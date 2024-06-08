@@ -50,7 +50,7 @@ const AdvancedSearch = ({ setAdvancedSearchOptions, onClose }) => {
         &#10005;
       </button>
       <div className="mb-2">
-        <label className="block text-sm font-medium text-black bold">총 예산</label>
+        <label className="block text-sm font-medium text-black bold">총 </label>
         <div className="flex items-center mt-2">
           <input
             type="text"

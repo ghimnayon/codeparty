@@ -2,20 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { schedule_temp2 } from "@/components/schedule/Schedule";
-import { useSchedule } from "@/components/schedule/ScheduleContext"; // ScheduleContext를 사용하기 위해 import
-
+import { useSchedule } from "@/components/schedule/ScheduleContext";
 import { db } from "@/firebase";
-import {
-  collection,
-  query,
-  getDocs,
-  addDoc,
-  orderBy,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
-
+import { collection, query, getDocs, addDoc, orderBy, where, onSnapshot } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 
 const scheduleCollection = collection(db, "todos");
@@ -56,35 +45,45 @@ export const UserMenu = () => {
   const [schedules, setSchedules] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [title, setTitle] = useState("");
-  const { schedule, setSchedule } = useSchedule();
+  const { schedule } = useSchedule();
   const [isTitleModalOpen, setIsTitleModalOpen] = useState(false);
 
-  const { data } = useSession();
-  const q = query(scheduleCollection, where("userName", "==", data?.user?.name), orderBy("created"));
+  const { data, status } = useSession();
 
   useEffect(() => {
-    
-    const fetchSchedules = async () => {
-      const querySnapshot = await getDocs(collection(db, "schedules"));
-      const fetchedSchedules = querySnapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-      }));
-      setSchedules(fetchedSchedules);
-    };
+    if (status === "authenticated" && data?.user?.name) {
+      const q = query(
+        collection(db, "schedules"),
+        where("userName", "==", data.user.name),
+        orderBy("created")
+      );
 
-    fetchSchedules();
+      const fetchSchedules = async () => {
+        try {
+          const querySnapshot = await getDocs(q);
+          const fetchedSchedules = querySnapshot.docs.map(doc => ({
+            ...doc.data(),
+            id: doc.id
+          }));
+          setSchedules(fetchedSchedules);
+        } catch (error) {
+          console.error("Error fetching schedules: ", error);
+        }
+      };
 
-    const unsubscribe = onSnapshot(collection(db, "schedules"), (snapshot) => {
-      const updatedSchedules = snapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-      }));
-      setSchedules(updatedSchedules);
-    });
+      fetchSchedules();
 
-    return () => unsubscribe();
-  }, []);
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const updatedSchedules = snapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id
+        }));
+        setSchedules(updatedSchedules);
+      });
+
+      return () => unsubscribe();
+    }
+  }, [status, data]);
 
   const handleSelectSchedule = (item) => {
     if (selectedSchedule?.id === item.id) {
@@ -106,7 +105,7 @@ export const UserMenu = () => {
 
     try {
       const newSchedule = {
-        username: data.user.name,
+        userName: data.user.name,
         title,
         created: new Date(),
         schedule
@@ -149,9 +148,9 @@ export const UserMenu = () => {
         ))}
       </ul>
       {isTitleModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 font-Pretendard">
           <div className="bg-white p-4 rounded shadow-lg">
-            <h2 className="mb-4">일정 제목 입력</h2>
+            <h2 className="mb-4 font-semibold">일정 제목 입력</h2>
             <input
               className="border p-2 w-full"
               type="text"
