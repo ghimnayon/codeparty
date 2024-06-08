@@ -147,7 +147,7 @@ const SearchBar = ({ onSearch }) => {
         <HeadlessPopover className="relative">
           <HeadlessPopover.Button className="flex items-center space-x-2 font-medium">
             <UserIcon className="h-5 w-5 text-gray-500" />
-            <span>{guests > 1 ? `인원 ${guests}명` : '인원'}</span>
+            <span>{guests}명</span>
           </HeadlessPopover.Button>
           <HeadlessPopover.Panel className="absolute z-10 p-4 shadow-lg rounded-lg mt-4" style = {{width : '80px', height : '40px'}}>
             <input
