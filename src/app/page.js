@@ -156,10 +156,10 @@ useEffect(() => {
 
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-white font-Pretendard">
-      <div className="p-3 relative mt-2 flex justify-end mr-4">
+      <div className="p-5 w-1/7 relative mt-2 flex justify-end mr-4">
         <Popover>
           <PopoverTrigger asChild>
-          <Button style={{ height: '50px' }} className="flex items-center opacity-100 bg-gray-700 border p-1 rounded-full"
+          <Button style={{ height: '50px' }} className="flex items-center bg-gray-200 border p-1 rounded-full"
           onClick = {() => {
             if (session) {
               toggleUserMenu();
@@ -176,15 +176,15 @@ useEffect(() => {
             <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
                <img src="/profileicon.png" alt="User Icon" style={{ width: '100%', height: '100%' }} />
             </div>
-            <div className="mr-4 text-extrabold text-white font-semibold">
+            {/* <div className="mr-4 text-extrabold text-white font-semibold">
               {session?(session.user.name):"로그인"}
-            </div>
+            </div> */}
           </Button>
 
           </PopoverTrigger>
           {showUserMenu && (
-            <PopoverContent align="end" className="w-60 bg-white p-2 shadow-lg">
-              <Button className="w-full bg-gray-500 text-white p-2 rounded" onClick={() => signOut()}>
+            <PopoverContent align="end" className="w-60 bg-white p-6 shadow-lg">
+              <Button className="w-full bg-gray-500 text-white rounded-full" onClick={() => signOut()}>
                     로그아웃
               </Button>
               <div className="mt-2">
@@ -207,11 +207,11 @@ useEffect(() => {
       </main>
       <div className="p-4 relative mt-1 flex justify-center">
       </div>
-      <div className="flex w-4/5 p-4 justify-center text-2xl overflow-auto text-black mt-2 mx-auto">
+      <div className="flex w-3/4 p-4 justify-center text-2xl overflow-auto text-black mt-2 mx-auto">
         <div className="text-black w-4/5 font-thin">
           이런 일정은 어떠세요?
         </div>
-        <div className="flex flex-row w-1/5">
+        <div className="flex flex-row w-1/4">
           <DownloadButton filename="MySchedule.csv" />
         </div>
       </div>

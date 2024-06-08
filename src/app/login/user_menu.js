@@ -121,20 +121,21 @@ export const UserMenu = () => {
   };
 
   return (
-    <div className="flex flex-col w-55">
+    <div className="flex flex-col w-55 font-Pretendard">
       <div className="mt-2">
-        <Button className="w-full bg-gray-500 text-white p-2 rounded" onClick={() => setIsTitleModalOpen(true)}>
+        <Button className="w-full bg-blue-500 text-white p-2 rounded-full" onClick={() => setIsTitleModalOpen(true)}>
           일정 저장하기
         </Button>
       </div>
-      <div className="w-full bg-gray-200 text-center mt-2">내 일정</div>
-      <ul className="mt-2 relative">
+      <div className="w-full bg-gray-200 rounded-full text-center mt-6 font-light">내 일정</div>
+      <ul className="mt-4 relative">
         {schedules.map((scheduleItem) => (
           <li key={scheduleItem.id} className="relative">
             <div
-              className="cursor-pointer p-2 bg-white hover:bg-gray-100"
+              className={`cursor-pointer p-2 text-center font-semibold border rounded-full ${
+                selectedSchedule?.id === scheduleItem.id ? "bg-green-500 text-white" : "bg-white text-black"
+              } hover:bg-green-500 hover:text-white`}
               onClick={() => handleSelectSchedule(scheduleItem)}
-              style={{ background: selectedSchedule?.id === scheduleItem.id ? "lightgray" : "white" }}
             >
               {scheduleItem.title}
             </div>

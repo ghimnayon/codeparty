@@ -125,7 +125,7 @@ function closeImage() {
 function daySummary(dayno, date, mainDest, destCount, cost) {
   return (
     <>
-      <div className="flex flex-row justify-between items-center md:hidden p-4 bg-blue-200 rounded-lg shadow-lg my-2 font-Pretendard" onClick={() => toggleSchedule(date)}> {/* 작은 화면 */}
+      <div className="flex flex-row justify-between items-center md:hidden p-4 bg-gradient-to-r from-blue-200 to-blue-100 rounded-3xl shadow-lg my-2 font-Pretendard" onClick={() => toggleSchedule(date)}> {/* 작은 화면 */}
         <div className="w-3/5">
           <h2 className="text-xl font-semibold">{dayno}일차</h2>
           <p>{date}</p>
@@ -135,7 +135,7 @@ function daySummary(dayno, date, mainDest, destCount, cost) {
           <p>💳 {cost}만원</p>
         </div>
       </div>
-      <div className="flex flex-row hidden justify-between items-center md:flex lg:hidden p-4 bg-blue-200 rounded-lg shadow-lg my-2" onClick={() => toggleSchedule(date)}> {/* 중간 화면 */}
+      <div className="flex flex-row hidden justify-between items-center md:flex lg:hidden p-4 bg-gradient-to-r from-blue-200 to-blue-100 rounded-3xl shadow-lg my-2" onClick={() => toggleSchedule(date)}> {/* 중간 화면 */}
         <div className="w-3/5 mr-4">
           <h2 className="text-xl font-semibold">{dayno}일차: {date}</h2>
           <p>{mainDest}</p>
@@ -145,7 +145,7 @@ function daySummary(dayno, date, mainDest, destCount, cost) {
           <p>총 비용 💳 {cost}만원</p>
         </div>
       </div>
-      <div className="flex flex-row justify-between items-center hidden lg:flex p-4 bg-blue-200 rounded-lg shadow-lg my-2" onClick={() => toggleSchedule(date)}> {/* 큰 화면 */}
+      <div className="flex flex-row justify-between items-center hidden lg:flex p-4 bg-gradient-to-r from-blue-200 to-blue-100 rounded-3xl shadow-lg my-2" onClick={() => toggleSchedule(date)}> {/* 큰 화면 */}
         <div className="w-3/5 mr-10">
           <h2 className="text-xl font-light">{dayno}일차 {mainDest}</h2>
           <p></p>
@@ -164,7 +164,7 @@ function singleSchedule(singleData) {
 
   return (
     <>
-      <div className="flex justify-left mb-2 bg-white p-4 rounded-lg shadow-md font-Pretendard">
+      <div className="flex justify-left mb-2 bg-white p-4 rounded-3xl shadow-md font-Pretendard">
         <div className="text-center whitespace-nowrap mr-6">
           <div>🕒 {singleData["time"]}</div>
         </div>
@@ -178,7 +178,7 @@ function singleSchedule(singleData) {
           <div>💳 {singleData["cost"]}</div>
         </div>
       </div>
-      <div className="flex mt-4 mb-6 p-4 bg-gray-100 rounded-lg shadow-inner font-Pretendard">
+      <div className="flex mt-4 mb-6 p-4 bg-gray-100 rounded-3xl shadow-inner font-Pretendard">
         <div className="mr-4">🎫</div>
         <div className="text-left">{singleData["content"]}</div>
       </div>
@@ -214,7 +214,7 @@ export const Schedule = () => {
   return (
     <div className="container mx-auto p-4 font-pretendard"> {/* Pretendard 폰트 적용 */}
       {daySummaries.map((summary, index) => (
-        <div key={index} className="flex flex-col bg-blue-50 shadow-lg rounded-lg p-6 mb-6 cursor-pointer"> {/* 배경색을 더 부드럽게 */}
+        <div key={index} className="flex flex-col bg-gradient-to-r from-blue-200 to-blue-100 shadow-lg rounded-3xl p-6 mb-6 cursor-pointer"> {/* 배경색을 더 부드럽게 */}
           {daySummary(summary["dayno"], summary["date"], summary["mainDest"], summary["destCount"], summary["totalCost"])}
           {dayDetails(split_data[index + 1])}
         </div>
