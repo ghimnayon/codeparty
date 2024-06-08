@@ -156,9 +156,6 @@ export default function Home() {
     }
   }, [isPopoverOpen]);
 
-  const UserProfile = () => {
-    const { data: session } = useSession();
-  };
 
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-white font-Pretendard">

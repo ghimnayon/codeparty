@@ -1,8 +1,6 @@
 import NextAuth from "next-auth";
 import KakaoProvider from "next-auth/providers/kakao";
 import axios from "axios";
-import fs from "fs/promises";
-import path from "path";
 
 const handler = NextAuth({
   providers: [
@@ -20,20 +18,15 @@ const handler = NextAuth({
     async signIn({ account, profile }) {
       if (account.provider === "kakao") {
         if (profile.id !== null) {
-          const userId = profile.id;
-
           try {
             const profileImageUrl = profile.properties?.profile_image;
 
-            if (profileImageUrl) {
-              const imagePath = path.join(process.cwd(), "public", "profile_images", `${userId}.jpg`);
-              const response = await axios.get(profileImageUrl, { responseType: 'arraybuffer' });
-              await fs.writeFile(imagePath, response.data);
-            }
+            // 프로필 이미지 URL을 토큰에 저장
+            account.profileImageUrl = profileImageUrl;
 
             return true;
           } catch (error) {
-            console.error("Error saving profile image:", error);
+            console.error("Error handling profile image:", error);
             return false;
           }
         }
@@ -61,6 +54,7 @@ const handler = NextAuth({
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
         token.accessTokenExpires = Date.now() + account.expires_in * 1000;
+        token.profileImage = account.profileImageUrl; // 프로필 이미지 URL을 토큰에 저장
       }
       
       if (Date.now() < token.accessTokenExpires) {
