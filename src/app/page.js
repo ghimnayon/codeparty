@@ -165,13 +165,9 @@ export default function Home() {
         toggleUserMenu={toggleUserMenu}
         showUserMenu={showUserMenu}
       />
-      <Head>
-        <title>Travel Search</title>
-        <meta name="description" content="Search for your next travel destination" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+
       <main className="flex flex-col items-center w-full">
-        <h1 className="p-4 mb-8 mt-4 text-5xl font-titan text-blue-500 !important">
+        <h1 className="p-0 mb-8 mt-0 text-5xl font-titan text-blue-500 !important">
           CodeTravel
         </h1>
         <div className="w-full flex justify-center">
@@ -180,19 +176,19 @@ export default function Home() {
       </main>
       <div className="p-4 relative mt-1 flex justify-center">
       </div>
-      <div className="flex w-3/4 p-4 justify-center text-2xl overflow-auto scrollbar-custom text-black mt-2 mx-auto">
-        <div className="text-black w-4/5 text-2xl font-titan text-blue-500">
-          Schedule
-        </div>
-        <div className="flex justify-end flex-row w-1/4">
-          <DownloadButton filename="MySchedule.csv" />
-        </div>
-      </div>
-      <div className="flex w-4/5 p-4 overflow-auto scrollbar-custom text-black mt-2 mx-auto">
-        <div className="w-3/5 h-96 pr-4 overflow-auto scrollbar-custom">
+      <div className="flex w-4/5 flex-grow p-4 overflow-auto scrollbar-custom text-black mt-2 mx-auto">
+        <div className="w-3/5 pr-4 min-h-full overflow-auto scrollbar-custom">
+          <div className="flex flex-row justify-left">
+            <div className="text-black text-2xl font-titan text-blue-500 ml-10 mr-8">
+              Schedule
+            </div>
+            <div className="flex justify-start flex-row">
+              <DownloadButton filename="MySchedule.csv" />
+            </div>
+          </div>
           <Schedule />
         </div>
-        <div className="w-2/5 h-96 flex flex-col p-2 overflow-auto scrollbar-custom">
+        <div className="w-2/5 min-h-full flex flex-col p-2 overflow-auto scrollbar-custom">
           <Chat messages={messages} loading={loading} onSendMessage={handleSend} />
         </div>
         <div ref={messagesEndRef} />

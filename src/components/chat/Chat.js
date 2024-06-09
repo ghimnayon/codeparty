@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 export const Chat = ({ messages, loading, onSendMessage }) => {
   return (
     <>
-      <div className="h-[calc(100%-3rem)] overflow-auto scroll-custom">
+      <div className="h-[calc(100%-3rem)] overflow-auto scrollbar-custom ">
         {/* messages 의 내용을 ChatBubble 컴포넌트를 통해 출력 */}
         {messages.map((message, index) => (
           <div key={index} className="my-1 sm:my-1.5">

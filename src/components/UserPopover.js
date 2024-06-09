@@ -12,7 +12,7 @@ const UserPopover = ({ session, toggleUserMenu, showUserMenu }) => {
   }, [showUserMenu]);
 
   return (
-    <div className="p-5 w-1/7 relative mt-2 flex justify-end mr-4 font-pretendard">
+    <div className="p-5 w-5/6 relative mt-2 flex justify-end mr-4 font-pretendard">
         <div className="flex justify-end w-4/5 mr-5 mt-4 p-1 text-l font-pretendard font-light text-black">
             {/* AI와 함께 여행 일정 짜기 */}
         </div>

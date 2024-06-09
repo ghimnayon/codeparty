@@ -145,12 +145,12 @@ function daySummary(dayno, date, mainDest, destCount, cost) {
           <p>총 비용 💳 {cost}만원</p>
         </div>
       </div>
-      <div className="flex flex-row justify-between items-center hidden lg:flex p-4 bg-gradient-to-r from-blue-200 to-blue-100 rounded-3xl shadow-lg my-2" onClick={() => toggleSchedule(date)}> {/* 큰 화면 */}
+      <div className="flex flex-row justify-between items-center hidden lg:flex p-4 bg-gradient-to-r from-indigo-200 to-blue-100 rounded-3xl shadow-lg my-2" onClick={() => toggleSchedule(date)}> {/* 큰 화면 */}
         <div className="w-3/5 mr-10">
           <h2 className="text-xl font-light">{dayno}일차 {mainDest}</h2>
           <p></p>
         </div>
-        <div className="w-2/5 font-light text-sm">
+        <div className="w-2/5 font-light text-lg">
           <p>목적지 📌 {destCount}곳</p>
           <p>총 비용 💳 {cost}만원</p>
         </div>
@@ -164,7 +164,7 @@ function singleSchedule(singleData) {
 
   return (
     <>
-      <div className="flex justify-left mb-2 bg-white p-4 rounded-3xl shadow-md font-pretendard">
+      <div className="flex justify-left mb-0 bg-white p-4 rounded-3xl shadow-md font-pretendard">
         <div className="text-center whitespace-nowrap mr-6">
           <div>🕒 {singleData["time"]}</div>
         </div>
@@ -178,7 +178,7 @@ function singleSchedule(singleData) {
           <div>💳 {singleData["cost"]}</div>
         </div>
       </div>
-      <div className="flex mt-4 mb-6 p-4 bg-gray-100 rounded-3xl shadow-inner font-pretendard">
+      <div className="flex mt-2 mb-6 p-4 bg-gray-100 rounded-3xl shadow-inner font-pretendard">
         <div className="mr-4">🎫</div>
         <div className="text-left">{singleData["content"]}</div>
       </div>
@@ -214,7 +214,7 @@ export const Schedule = () => {
   return (
     <div className="container mx-auto p-4 font-pretendard"> {/* Pretendard 폰트 적용 */}
       {daySummaries.map((summary, index) => (
-        <div key={index} className="flex flex-col bg-gradient-to-r from-blue-200 to-blue-100 shadow-lg rounded-3xl p-6 mb-6 cursor-pointer"> {/* 배경색을 더 부드럽게 */}
+        <div key={index} className="flex flex-col bg-gradient-to-r from-blue-100 to-blue-50 shadow-lg rounded-3xl p-6 mb-6 cursor-pointer"> {/* 배경색을 더 부드럽게 */}
           {daySummary(summary["dayno"], summary["date"], summary["mainDest"], summary["destCount"], summary["totalCost"])}
           {dayDetails(split_data[index + 1])}
         </div>
