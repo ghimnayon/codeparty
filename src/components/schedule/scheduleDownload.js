@@ -26,7 +26,7 @@ export const DownloadButton = ({ text, filename }) => {
 
   return (
     <Button
-      className="bg-green-500 hover:bg-green-600 text-white font-Pretendard font-semibold py-2 px-4 rounded-full flex items-center"
+      className="bg-green-500 hover:bg-green-600 text-white font-pretendard font-semibold py-2 px-4 rounded-full flex items-center"
       onClick={() => handleDownload(filename)}
       variant="primary"
     >

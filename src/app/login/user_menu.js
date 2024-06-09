@@ -120,7 +120,7 @@ export const UserMenu = () => {
   };
 
   return (
-    <div className="flex flex-col w-55 font-Pretendard">
+    <div className="flex flex-col w-55 font-pretendard">
       <div className="mt-2">
         <Button className="w-full bg-blue-500 text-white p-2 rounded-full" onClick={() => setIsTitleModalOpen(true)}>
           일정 저장하기
@@ -148,7 +148,7 @@ export const UserMenu = () => {
         ))}
       </ul>
       {isTitleModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 font-Pretendard">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 font-pretendard">
           <div className="bg-white p-4 rounded shadow-lg">
             <h2 className="mb-4 font-semibold">일정 제목 입력</h2>
             <input

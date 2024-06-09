@@ -1,11 +1,22 @@
-
-import { Inter } from "next/font/google";
+import localFont from 'next/font/local'
 import "./globals.css";
 import ClientSessionProvider from "@/components/ClientSessionProvider";
 import { ScheduleProvider } from "@/components/schedule/ScheduleContext";
 
+const pretendard = localFont({
+  src: '../fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard',
+})
 
-const inter = Inter({ subsets: ["latin"] });
+// const titan = localFont({ src: '../fonts/TitanOne.ttf' })
+
+const titan = localFont({
+  src: '../fonts/TitanOne.ttf',
+  display: 'swap',
+  variable: '--font-titan',
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -14,7 +25,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${pretendard.variable} ${titan.variable}`}>
       <body>
         <ClientSessionProvider>
           <ScheduleProvider>

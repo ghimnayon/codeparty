@@ -8,10 +8,14 @@ import { UserMenu } from "@/app/login/user_menu";
 const UserPopover = ({ session, toggleUserMenu, showUserMenu }) => {
   useEffect(() => {
     // showUserMenu 상태가 변경될 때마다 리렌더링
+    console.log('Session:', session);
   }, [showUserMenu]);
 
   return (
-    <div className="p-5 w-1/7 relative mt-2 flex justify-end mr-4">
+    <div className="p-5 w-1/7 relative mt-2 flex justify-end mr-4 font-pretendard">
+        <div className="flex justify-end w-4/5 mr-5 mt-4 p-1 text-l font-pretendard font-light text-black">
+            {/* AI와 함께 여행 일정 짜기 */}
+        </div>
       <Popover>
         <PopoverTrigger asChild>
           <Button

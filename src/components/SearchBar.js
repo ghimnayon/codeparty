@@ -98,7 +98,7 @@ const SearchBar = ({ onSearch }) => {
   }
 
   return (
-    <div className="w-full flex-col items-center font-Pretendard">
+    <div className="w-full flex-col items-center font-pretendard">
       <div className="flex justify-between items-center border rounded-full p-4 shadow-md mx-auto bg-white font-medium" style={{ width: '720px', height: '60px' }}>
         <div className="flex items-center space-x-2">
           <LocationMarkerIcon className="h-5 w-5 text-gray-500" />
@@ -107,13 +107,13 @@ const SearchBar = ({ onSearch }) => {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             placeholder="여행지"
-            className="focus:outline-none"
+            className="focus:outline-none font-pretendard"
           />
         </div>
 
         <HeadlessPopover className="relative font-medium">
           <HeadlessPopover.Button ref={checkInRef} className="flex items-center space-x-2">
-            <CalendarIcon className="h-5 w-5 text-gray-500" />
+            <CalendarIcon className="h-5 w-5 text-gray-500 font-pretendard" />
             <span>{startDate ? startDate.toLocaleDateString() : '체크인'}</span>
           </HeadlessPopover.Button>
           <HeadlessPopover.Panel className="absolute z-10 p-5 shadow-lg rounded-xl w-120 -translate-x-1/3 mt-8 shadow-lg bg-white">
@@ -131,7 +131,7 @@ const SearchBar = ({ onSearch }) => {
                 inline
                 monthsShown={2}
                 minDate={new Date()}
-                className="rounded"
+                className="rounded font-pretendard"
               />
             </div>
           </HeadlessPopover.Panel>
@@ -142,11 +142,11 @@ const SearchBar = ({ onSearch }) => {
           onClick={handleCheckOutClick}
         >
           <CalendarIcon className="h-5 w-5 text-gray-500" />
-          <span>{endDate ? endDate.toLocaleDateString() : '체크아웃'}</span>
+          <span className= "font-pretendard" >{endDate ? endDate.toLocaleDateString() : '체크아웃'}</span>
         </button>
 
         <HeadlessPopover className="relative">
-          <HeadlessPopover.Button className="flex items-center space-x-2 font-medium">
+          <HeadlessPopover.Button className="flex items-center space-x-2 font-medium font-Pretendard">
             <UserIcon className="h-5 w-5 text-gray-500" />
             <span>{guests > 1 ? `인원 ${guests}명` : '인원'}</span>
           </HeadlessPopover.Button>
@@ -172,7 +172,7 @@ const SearchBar = ({ onSearch }) => {
 
           <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
             <PopoverTrigger asChild>
-              <Button variant="ghost" className="text-black ml-2 font-Pretendard font-medium">
+              <Button variant="ghost" className="text-black ml-2 font-pretendard font-medium">
                 <AdjustmentsIcon className="h-5 w-5 text-black" />
               </Button>
             </PopoverTrigger>
@@ -254,7 +254,7 @@ const SearchBar = ({ onSearch }) => {
                 <div className="flex justify-center mt-8">
             <Button 
               onClick={applyFilters} 
-              className="font-Pretendard bg-blue-500 text-white font-semibold hover:bg-green-500 hover:text-white"
+              className="font-pretendard bg-blue-500 text-white font-semibold hover:bg-green-500 hover:text-white"
               >
                 적용
               </Button>

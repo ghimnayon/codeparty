@@ -125,7 +125,7 @@ function closeImage() {
 function daySummary(dayno, date, mainDest, destCount, cost) {
   return (
     <>
-      <div className="flex flex-row justify-between items-center md:hidden p-4 bg-gradient-to-r from-blue-200 to-blue-100 rounded-3xl shadow-lg my-2 font-Pretendard" onClick={() => toggleSchedule(date)}> {/* 작은 화면 */}
+      <div className="flex flex-row justify-between items-center md:hidden p-4 bg-gradient-to-r from-blue-200 to-blue-100 rounded-3xl shadow-lg my-2 font-pretendard" onClick={() => toggleSchedule(date)}> {/* 작은 화면 */}
         <div className="w-3/5">
           <h2 className="text-xl font-semibold">{dayno}일차</h2>
           <p>{date}</p>
@@ -164,21 +164,21 @@ function singleSchedule(singleData) {
 
   return (
     <>
-      <div className="flex justify-left mb-2 bg-white p-4 rounded-3xl shadow-md font-Pretendard">
+      <div className="flex justify-left mb-2 bg-white p-4 rounded-3xl shadow-md font-pretendard">
         <div className="text-center whitespace-nowrap mr-6">
           <div>🕒 {singleData["time"]}</div>
         </div>
-        <div className="text-center w-full text-wrap line-clamp-3 mr-6 font-Pretendard">
+        <div className="text-center w-full text-wrap line-clamp-3 mr-6 font-pretendard">
           <div>📌 {singleData["dest"]}<a target="_blank" href={googleMapAddress}>🔗</a></div>
         </div>
-        <div className="text-center whitespace-nowrap mr-6 font-Pretendard">
+        <div className="text-center whitespace-nowrap mr-6 font-pretendard">
           <div>⌛ {singleData["duration"]}</div>
         </div>
-        <div className="text-center whitespace-nowrap mr-6 font-Pretendard">
+        <div className="text-center whitespace-nowrap mr-6 font-pretendard">
           <div>💳 {singleData["cost"]}</div>
         </div>
       </div>
-      <div className="flex mt-4 mb-6 p-4 bg-gray-100 rounded-3xl shadow-inner font-Pretendard">
+      <div className="flex mt-4 mb-6 p-4 bg-gray-100 rounded-3xl shadow-inner font-pretendard">
         <div className="mr-4">🎫</div>
         <div className="text-left">{singleData["content"]}</div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 import AdvancedSearch from "@/components/advancedSearch/AdvancedSearch";
 
-import { Schedule, schedule_temp2 } from "@/components/schedule/Schedule";
+import { Schedule } from "@/components/schedule/Schedule";
 import { DownloadButton } from "@/components/schedule/scheduleDownload";
 
 import { Chat } from "@/components/chat/Chat";
@@ -23,7 +23,7 @@ import UserPopover from '@/components/UserPopover';
 
 export default function Home() {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [count, setCount] = useState(1);
   const [displayCount, setDisplayCount] = useState("인원");
@@ -69,7 +69,7 @@ export default function Home() {
     const updatedMessages = [...messages, message];
     setMessages(updatedMessages);
     setLoading(true);
-    
+
     const response = await fetch("/api/gemini", {
       method: "POST",
       headers: {
@@ -86,7 +86,7 @@ export default function Home() {
       setLoading(false);
       throw new Error(response.statusText);
     }
-    
+
     // 응답을 JSON 형태로 변환
     // 비동기 API 를 사용하여 응답을 받기 때문에 await 사용
     const result = await response.json();
@@ -94,17 +94,19 @@ export default function Home() {
     if (!result) {
       return;
     }
-  
+
     try {
       const responseText = result.parts[0].text;
       const scheduleIndex = responseText.indexOf('{"schedule"');
       const scheduleText = responseText.substring(scheduleIndex);
       const answerText = responseText.substring(0, scheduleIndex);
 
-      const answer = {role: "model", parts: [{text: answerText}]};
+      const answer = { role: "model", parts: [{ text: answerText }] };
       const scheduleJson = JSON.parse(scheduleText);
-      
-      if (scheduleJson["schedule"].length > 0) { setSchedule(scheduleJson["schedule"]);}
+
+      if (scheduleJson["schedule"].length > 0) {
+        setSchedule(scheduleJson["schedule"]);
+      }
 
       setLoading(false);
       setMessages((messages) => [...messages, answer]);
@@ -119,11 +121,11 @@ export default function Home() {
     return;
   };
 
-  function handleSearch (prompt) {
+  function handleSearch(prompt) {
     handleReset();
     const message = {
-        role: "user",
-        parts: [{ text: prompt}]
+      role: "user",
+      parts: [{ text: prompt }]
     };
 
     handleSend(message);
@@ -136,8 +138,7 @@ export default function Home() {
         parts: [{ text: "안녕하세요? 여행전문가 트래블코드입니다. 어떤 여행을 원하세요?" }],
       },
     ]);
-  }; 
-
+  };
 
   // 메시지 목록이 업데이트 될 때마다 맨 아래로 스크롤
   useEffect(() => {
@@ -156,22 +157,22 @@ export default function Home() {
     }
   }, [isPopoverOpen]);
 
-
   return (
-    <div className="w-full h-screen mx-auto flex flex-col bg-white font-Pretendard">
-      <UserPopover 
-        session={session} 
-        toggleUserMenu={toggleUserMenu} 
-        showUserMenu={showUserMenu} 
+    <div className="w-full h-screen mx-auto flex flex-col bg-white">
+      <UserPopover
+        session={session}
+        toggleUserMenu={toggleUserMenu}
+        showUserMenu={showUserMenu}
       />
-
       <Head>
         <title>Travel Search</title>
         <meta name="description" content="Search for your next travel destination" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col items-center w-full">
-        <h1 className="text-4xl font-bold mb-8 mt-4 text-black font-thin">여행 계획 세우기</h1>
+        <h1 className="p-4 mb-8 mt-4 text-5xl font-titan text-blue-500 !important">
+          CodeTravel
+        </h1>
         <div className="w-full flex justify-center">
           <SearchBar onSearch={handleSearch} className="w-3/5" />
         </div>
@@ -179,8 +180,8 @@ export default function Home() {
       <div className="p-4 relative mt-1 flex justify-center">
       </div>
       <div className="flex w-3/4 p-4 justify-center text-2xl overflow-auto scrollbar-custom text-black mt-2 mx-auto">
-        <div className="text-black w-4/5 font-thin">
-          이런 일정은 어떠세요?
+        <div className="text-black w-4/5 text-2xl font-titan text-blue-500">
+          Schedule
         </div>
         <div className="flex justify-end flex-row w-1/4">
           <DownloadButton filename="MySchedule.csv" />
