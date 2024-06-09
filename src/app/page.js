@@ -178,7 +178,7 @@ export default function Home() {
       </main>
       <div className="p-4 relative mt-1 flex justify-center">
       </div>
-      <div className="flex w-3/4 p-4 justify-center text-2xl overflow-auto text-black mt-2 mx-auto">
+      <div className="flex w-3/4 p-4 justify-center text-2xl overflow-auto scrollbar-custom text-black mt-2 mx-auto">
         <div className="text-black w-4/5 font-thin">
           이런 일정은 어떠세요?
         </div>
@@ -186,11 +186,11 @@ export default function Home() {
           <DownloadButton filename="MySchedule.csv" />
         </div>
       </div>
-      <div className="flex w-4/5 p-4 overflow-auto text-black mt-2 mx-auto">
-        <div className="w-3/5 h-96 pr-4 overflow-auto">
+      <div className="flex w-4/5 p-4 overflow-auto scrollbar-custom text-black mt-2 mx-auto">
+        <div className="w-3/5 h-96 pr-4 overflow-auto scrollbar-custom">
           <Schedule />
         </div>
-        <div className="w-2/5 h-96 flex flex-col p-2 overflow-auto">
+        <div className="w-2/5 h-96 flex flex-col p-2 overflow-auto scrollbar-custom">
           <Chat messages={messages} loading={loading} onSendMessage={handleSend} />
         </div>
         <div ref={messagesEndRef} />

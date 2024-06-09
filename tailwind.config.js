@@ -13,16 +13,13 @@ module.exports = {
       fontFamily: {
         custom: ['CustomFont', 'sans-serif'],
       },
-    },
-    
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
+      container: {
+        center: true,
+        padding: "2rem",
+        screens: {
+          "2xl": "1400px",
+        },
       },
-    },
-    extend: {
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -78,9 +75,40 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-      "image-1" : "url('/background1.png')"
+        "image-1": "url('/background1.png')"
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-hide': {
+          '-ms-overflow-style': 'none',  /* IE and Edge */
+          'scrollbar-width': 'none'  /* Firefox */
+        },
+        '.scrollbar-hide::-webkit-scrollbar': {
+          'display': 'none'  /* Safari and Chrome */
+        },
+        '.scrollbar-custom::-webkit-scrollbar': {
+          'width': '12px',
+        },
+        '.scrollbar-custom::-webkit-scrollbar-track': {
+          'background': '#f5f5f5',
+        },
+        '.scrollbar-custom::-webkit-scrollbar-thumb': {
+          'background': '#cccccc',
+          'border-radius': '10px',
+          'border': '3px solid transparent',
+          'background-clip': 'content-box',
+        },
+        '.scrollbar-custom::-webkit-scrollbar-thumb:hover': {
+          'background': '#aaaaaa',
+        },
+        '.scrollbar-custom::-webkit-scrollbar-thumb:active': {
+          'background': '#888888',
+        },
+      }, ['responsive']);
+    }
+  ],
 }

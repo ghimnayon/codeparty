@@ -176,7 +176,7 @@ const SearchBar = ({ onSearch }) => {
                 <AdjustmentsIcon className="h-5 w-5 text-black" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent align="center" className="font-Pretendard" style={{ width: '360px', padding: '20px', maxHeight: '420px', overflowY: 'auto' }}>
+            <PopoverContent align="center" className="font-Pretendard scrollbar-custom" style={{ width: '360px', padding: '20px', maxHeight: '420px', overflowY: 'auto' }}>
               <div className="relative p-5 rounded">
                 <button
                   onClick={closePopover}
@@ -251,9 +251,14 @@ const SearchBar = ({ onSearch }) => {
                   </div>
                 </div>
 
-                <div className="flex justify-end mt-8">
-                  <Button onClick={applyFilters} variant="ghost" className="text-black font-thin text-xl font-Pretendard">적용하기</Button>
-                </div>
+                <div className="flex justify-center mt-8">
+            <Button 
+              onClick={applyFilters} 
+              className="font-Pretendard bg-blue-500 text-white font-semibold hover:bg-green-500 hover:text-white"
+              >
+                적용
+              </Button>
+            </div>
               </div>
             </PopoverContent>
           </Popover>
