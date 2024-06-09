@@ -98,8 +98,9 @@ export default function Home() {
     try {
       const responseText = result.parts[0].text;
       const scheduleIndex = responseText.indexOf('{"schedule"');
-      const scheduleText = responseText.substring(scheduleIndex);
-      const answerText = responseText.substring(0, scheduleIndex);
+      const lastBracketIndex = responseText.lastIndexOf('}');
+      const scheduleText = responseText.substring(scheduleIndex, lastBracketIndex + 1);
+      const answerText = responseText.substring(0, scheduleIndex).replace("```json", "");
 
       const answer = { role: "model", parts: [{ text: answerText }] };
       const scheduleJson = JSON.parse(scheduleText);
