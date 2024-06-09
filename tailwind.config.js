@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: 'jit', 
   darkMode: ["class"],
   content: [
     './pages/**/*.{js,jsx}',
@@ -7,11 +8,11 @@ module.exports = {
     './app/**/*.{js,jsx}',
     './src/**/*.{js,jsx}',
   ],
-  prefix: "",
   theme: {
     extend: {
       fontFamily: {
-        custom: ['CustomFont', 'sans-serif'],
+        pretendard: ['var(--font-pretendard)'],
+        titan: ['var(--font-titan)'],
       },
       container: {
         center: true,
