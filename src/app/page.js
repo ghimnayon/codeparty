@@ -19,7 +19,7 @@ import { useSchedule } from "@/components/schedule/ScheduleContext";
 import Head from 'next/head';
 import SearchBar from '@/components/SearchBar';
 
-import { UserMenu } from "@/app/login/user_menu";
+import UserPopover from '@/components/UserPopover';
 
 export default function Home() {
   const router = useRouter();
@@ -159,45 +159,11 @@ export default function Home() {
 
   return (
     <div className="w-full h-screen mx-auto flex flex-col bg-white font-Pretendard">
-      <div className="p-5 w-1/7 relative mt-2 flex justify-end mr-4">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              className="flex items-center bg-gray-200 border p-1 rounded-full" style ={{width:'110px', height:'60px'}}
-              onClick={() => {
-                if (session) {
-                  toggleUserMenu();
-                } else {
-                  signIn("kakao");
-                }
-              }}
-            >
-              <div className="flex flex-col justify-center items-center mr-2 ml-5">
-                <div className="w-4 h-0.5 bg-gray-500 mb-1"></div>
-                <div className="w-4 h-0.5 bg-gray-500 mb-1"></div>
-                <div className="w-4 h-0.5 bg-gray-500"></div>
-              </div>
-              <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center">
-                {session?.user?.profileImage ? (
-                  <img src={session.user.profileImage} alt="User Profile" className="w-10 h-10 rounded-full" />
-                ) : (
-                  <img src="/profileicon.png" alt="User Icon" className="w-13 h-13" />
-                )}
-              </div>
-            </Button>
-          </PopoverTrigger>
-          {showUserMenu && (
-            <PopoverContent align="end" className="w-60 bg-white p-6 shadow-lg">
-              <Button className="w-full bg-gray-500 text-white rounded-full" onClick={() => signOut()}>
-                로그아웃
-              </Button>
-              <div className="mt-2">
-                <UserMenu />
-              </div>
-            </PopoverContent>
-          )}
-        </Popover>
-      </div>
+      <UserPopover 
+        session={session} 
+        toggleUserMenu={toggleUserMenu} 
+        showUserMenu={showUserMenu} 
+      />
 
       <Head>
         <title>Travel Search</title>
@@ -216,7 +182,7 @@ export default function Home() {
         <div className="text-black w-4/5 font-thin">
           이런 일정은 어떠세요?
         </div>
-        <div className="flex flex-row w-1/4">
+        <div className="flex justify-end flex-row w-1/4">
           <DownloadButton filename="MySchedule.csv" />
         </div>
       </div>
