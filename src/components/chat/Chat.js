@@ -6,7 +6,7 @@ import { ChatBubble } from "./ChatBubble";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-export const Chat = ({ messages, loading, onSendMessage }) => {
+export const Chat = ({ messages, loading, onSendMessage, onRef }) => {
   return (
     <>
       <div className="h-[calc(100%-3rem)] overflow-auto scrollbar-custom ">
@@ -24,6 +24,7 @@ export const Chat = ({ messages, loading, onSendMessage }) => {
             <ChatLoader />
           </div>
         )}
+        <div ref={onRef} />
       </div>
       <div className="h-3rem w-full">
         {/* 채팅 입력창을 표시, 전송 액션을 실행하는 onSend 함수를 넘겨준다 */}

@@ -97,10 +97,11 @@ export default function Home() {
 
     try {
       const responseText = result.parts[0].text;
+      console.log(responseText);
       const scheduleIndex = responseText.indexOf('{"schedule"');
       const lastBracketIndex = responseText.lastIndexOf('}');
       const scheduleText = responseText.substring(scheduleIndex, lastBracketIndex + 1);
-      const answerText = responseText.substring(0, scheduleIndex).replace("```json",);
+      const answerText = responseText.substring(0, scheduleIndex).replace("```json", "").trim();
 
       const answer = { role: "model", parts: [{ text: answerText }] };
       const scheduleJson = JSON.parse(scheduleText);
@@ -189,9 +190,8 @@ export default function Home() {
           <Schedule />
         </div>
         <div className="w-2/5 min-h-full flex flex-col p-2 overflow-auto scrollbar-custom">
-          <Chat messages={messages} loading={loading} onSendMessage={handleSend} />
+          <Chat messages={messages} loading={loading} onSendMessage={handleSend} onRef={messagesEndRef} />
         </div>
-        <div ref={messagesEndRef} />
       </div>
     </div>
   );

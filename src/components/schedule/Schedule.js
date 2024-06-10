@@ -146,11 +146,12 @@ function daySummary(dayno, date, mainDest, destCount, cost) {
         </div>
       </div>
       <div className="flex flex-row justify-between items-center hidden lg:flex p-4 bg-gradient-to-r from-indigo-200 to-blue-100 rounded-3xl shadow-lg my-2" onClick={() => toggleSchedule(date)}> {/* 큰 화면 */}
-        <div className="w-3/5 mr-10">
-          <h2 className="text-xl font-regular">{dayno}일차 {mainDest}</h2>
+        <div className="flex flex-grow mr-10">
+          <h2 className="text-xl font-titan text-blue-500">Day {dayno}</h2>
+          <div className="ml-6 text-xl font-regular">{mainDest}</div>
           <p></p>
         </div>
-        <div className="w-2/5 font-light text-m">
+        <div className="w-32 font-light text-m">
           <p>📌 {destCount}곳 방문</p>
           <p>💳 {cost}만원 지출</p>
         </div>

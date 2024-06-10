@@ -14,7 +14,7 @@ const UserPopover = () => {
 
   useEffect(() => {
     // Session 상태가 변경될 때마다 콘솔에 출력
-    console.log('Session:', session);
+    // console.log('Session:', session);
   }, [session]);
 
   return (

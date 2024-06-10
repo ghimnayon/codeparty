@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useSchedule } from "@/components/schedule/ScheduleContext";
+import { splitSchedule, summarizeSchedule } from "@/components/schedule/ScheduleParser";
 import { db } from "@/firebase";
 import { collection, query, getDocs, addDoc, deleteDoc, doc, orderBy, where, onSnapshot } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,35 @@ import { FaListUl } from "react-icons/fa"; // 리스트 아이콘을 가져오�
 const scheduleCollection = collection(db, "schedules");
 
 const formatScheduleDetails = (schedule) => {
+
+  const split_data = splitSchedule(schedule);
+  var daySummaries = [];
+
+  for (var dayno in split_data) {
+    var summary = summarizeSchedule(split_data[dayno]);
+    summary["dayno"] = dayno;
+    daySummaries.push(summary);
+  }
+
+  const formattedSummaries = daySummaries.map((summary, index) => (
+    <div key={summary["date"]} className="flex flex-row mb-4 p-4 rounded-lg shadow-lg bg-blue-100 font-pretendard">
+      <div className="flex flex-col w-2/3 ml-2 mt-2">
+        <h2 className="text-2xl font-bold mb-4 text-blue-500 font-titan">Day {summary["dayno"]}</h2>
+        <div className="text-black mb-2">
+          <span className="font-semibold">주요 목적지:</span> {summary["mainDest"]}
+        </div>
+      </div>
+      <div>
+        <br></br>
+        <div className="text-black mb-0 text-m">방문할 장소 📌 {summary["destCount"]}곳</div>
+        <div className="text-black mb-4 text-m">총 여행비용 💳 {summary["totalCost"]}만원</div>
+      </div>
+    </div>
+  ));
+
+  return formattedSummaries;
+
+
   const days = schedule.reduce((acc, item) => {
     const { date, dest, time, duration, cost, content } = item;
     if (!acc[date]) acc[date] = [];
@@ -50,13 +80,13 @@ export const UserMenu = () => {
   const [schedules, setSchedules] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [title, setTitle] = useState("");
-  const { schedule } = useSchedule();
+  const { schedule, setSchedule } = useSchedule();
   const [isTitleModalOpen, setIsTitleModalOpen] = useState(false);
 
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    console.log("UserMenu - session:", session); // 로그 추가
+    // console.log("UserMenu - session:", session); // 로그 추가
     if (status === "authenticated" && session?.user?.name) {
       const q = query(
         collection(db, "schedules"),
@@ -154,25 +184,40 @@ export const UserMenu = () => {
         {schedules.map((scheduleItem) => (
           <li key={scheduleItem.id} className="relative">
             <div
-              className={`cursor-pointer mb-2 p-2 text-center font-semibold font-Pretendard border rounded-full ${
+              className={`flex justify-between cursor-pointer mb-2 p-2 text-center font-semibold font-Pretendard border rounded-full ${
                 selectedSchedule?.id === scheduleItem.id ? "bg-green-500 text-white" : "bg-white text-black"
               } hover:bg-green-500 hover:text-white`}
               onClick={() => handleSelectSchedule(scheduleItem)}
             >
-              {scheduleItem.title}
+              <div className="flex text-center items-center ml-4">
+                {scheduleItem.title}
+              </div>
+              <Button
+              className="bg-red-500 rounded-full"
+              onClick={() => handleDelete(scheduleItem.id)}
+              >
+                🗑
+              </Button>
             </div>
+            
             {selectedSchedule?.id === scheduleItem.id && (
               <div className="absolute top-[-45px] right-full mr-8 ml-2 p-4 bg-white shadow-lg z-10" style={{ width:'600px', padding: '10px', maxHeight: '420px', overflowY: 'auto'}}> {/* 팝오버 창 위치 수정 */}
                 {/* <h2>{scheduleItem.title}</h2> */}
                 <div>{formatScheduleDetails(scheduleItem.schedule)}</div>
                 <div className="flex justify-center p-4"> {/* 버튼을 오른쪽 끝으로 정렬 */}
-                <Button
-                  className="flex justify-center bg-red-500 text-white p-2 rounded"
-                  onClick={() => handleDelete(scheduleItem.id)}
-                >
-                  일정 삭제
-                </Button>
-              </div>
+                  <Button
+                    className="flex justify-center bg-red-500 text-white p-2 rounded mr-6"
+                    onClick={() => handleDelete(scheduleItem.id)}
+                  >
+                    일정 삭제
+                  </Button>
+                  <Button
+                    className="flex justify-center bg-green-500 text-white p-2 rounded ml-6"
+                    onClick={() => setSchedule(selectedSchedule?.schedule)}
+                  >
+                    불러오기
+                  </Button>
+                </div>
               </div>
             )}
           </li>

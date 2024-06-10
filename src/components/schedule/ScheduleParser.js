@@ -32,6 +32,7 @@ export function summarizeSchedule(schedule) {
 
 
 export function splitSchedule(data) {
+    
     let counter = 1;
     const res = data.reduce((acc, val) => {
         if (!acc[counter]) {
