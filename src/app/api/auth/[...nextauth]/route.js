@@ -51,7 +51,7 @@ const handler = NextAuth({
       }
       return session;
     },
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, profile }) {
       if (account?.access_token) {
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
@@ -59,7 +59,7 @@ const handler = NextAuth({
         token.profileImage = account.profileImageUrl; // 프로필 이미지 URL을 토큰에 저장
         token.name = account.name; // 닉네임을 토큰에 저장
       }
-
+      
       if (Date.now() < token.accessTokenExpires) {
         return token;
       }
