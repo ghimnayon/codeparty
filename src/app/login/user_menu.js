@@ -116,7 +116,7 @@ export const UserMenu = () => {
   };
 
   const handleDelete = async (scheduleId) => {
-    if (confirm("정말로 이 일정을 삭제하시겠습니까?")) {
+    if (confirm("이 일정을 삭제하시겠습니까?")) {
       try {
         await deleteDoc(doc(db, "schedules", scheduleId));
         setSchedules(schedules.filter(schedule => schedule.id !== scheduleId));
