@@ -20,9 +20,11 @@ const handler = NextAuth({
         if (profile.id !== null) {
           try {
             const profileImageUrl = profile.properties?.profile_image;
+            const nickname = profile.properties?.nickname;
 
-            // 프로필 이미지 URL을 토큰에 저장
+            // 프로필 이미지 URL과 닉네임을 토큰에 저장
             account.profileImageUrl = profileImageUrl;
+            account.name = nickname;
 
             return true;
           } catch (error) {
@@ -55,8 +57,9 @@ const handler = NextAuth({
         token.refreshToken = account.refresh_token;
         token.accessTokenExpires = Date.now() + account.expires_in * 1000;
         token.profileImage = account.profileImageUrl; // 프로필 이미지 URL을 토큰에 저장
+        token.name = account.name; // 닉네임을 토큰에 저장
       }
-      
+
       if (Date.now() < token.accessTokenExpires) {
         return token;
       }
