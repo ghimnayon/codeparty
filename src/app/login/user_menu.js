@@ -19,23 +19,29 @@ const formatScheduleDetails = (schedule) => {
   const formattedDetails = Object.entries(days).map(([date, items], index) => {
     const totalCost = items.reduce((sum, { cost }) => sum + parseInt(cost.replace("만원", "")), 0);
     return (
-      <div key={date} className="mb-4">
-        <h2 className="text-lg font-bold mb-2">{index + 1}일차 여행: {date}</h2>
-        <div>주요 목적지: {items[0].dest}</div>
-        <div>방문할 장소 📌 {items.length}곳</div>
-        <div>총 여행비용 💳 {totalCost}만원</div>
+      <div key={date} className="mb-6 p-6 rounded-lg shadow-lg bg-blue-100 font-pretendard">
+        <h2 className="text-2xl font-bold mb-4 text-blue-500 font-titan">Day {index + 1} {date}</h2>
+        <div className="text-black mb-2">
+          <span className="font-semibold">주요 목적지:</span> {items[0].dest}
+        </div>
+        <div className="text-black mb-0 text-m">방문할 장소 📌 {items.length}곳</div>
+        <div className="text-black mb-4 text-m">총 여행비용 💳 {totalCost}만원</div>
         {items.map((item, idx) => (
-          <div key={idx} className="mt-2">
-            <div>🕒 {item.time}</div>
-            <div>📌 {item.dest}🔗</div>
-            <div>⌛ {item.duration}</div>
-            <div>💳 {item.cost}</div>
-            <div>🎫 {item.content}</div>
+          <div key={idx} className="mt-4 bg-gray-100 opacity-50% rounded-full shadow-lg">
+            <div className="flex flex-wrap p-6">
+              <span className="mr-6 text-black">🕒 {item.time}</span>
+              <span className="mr-6 text-black">📌 {item.dest}🔗</span>
+              <span className="mr-6 text-black">⌛ {item.duration}</span>
+              <span className="mr-6 text-black">💳 {item.cost}</span>
+              <span className="text-black">🎫 {item.content}</span>
+            </div>
           </div>
         ))}
       </div>
     );
   });
+  
+  
 
   return formattedDetails;
 };
@@ -156,12 +162,12 @@ export const UserMenu = () => {
               {scheduleItem.title}
             </div>
             {selectedSchedule?.id === scheduleItem.id && (
-              <div className="absolute top-[-100px] right-full mr- ml-2 p-4 bg-white shadow-lg z-10" style={{ width:'600px', padding: '10px', maxHeight: '420px', overflowY: 'auto'}}> {/* 팝오버 창 위치 수정 */}
+              <div className="absolute top-[-45px] right-full mr-8 ml-2 p-4 bg-white shadow-lg z-10" style={{ width:'600px', padding: '10px', maxHeight: '420px', overflowY: 'auto'}}> {/* 팝오버 창 위치 수정 */}
                 {/* <h2>{scheduleItem.title}</h2> */}
                 <div>{formatScheduleDetails(scheduleItem.schedule)}</div>
-                <div className="flex justify-end p-4"> {/* 버튼을 오른쪽 끝으로 정렬 */}
+                <div className="flex justify-center p-4"> {/* 버튼을 오른쪽 끝으로 정렬 */}
                 <Button
-                  className="flex justify-end bg-red-500 text-white p-2 rounded"
+                  className="flex justify-center bg-red-500 text-white p-2 rounded"
                   onClick={() => handleDelete(scheduleItem.id)}
                 >
                   일정 삭제
@@ -177,7 +183,7 @@ export const UserMenu = () => {
           <div className="bg-white p-4 rounded shadow-lg mr-5 ml-5">
             <h2 className="mb-4 font-semibold text-m font-Pretendard">일정 제목 입력</h2>
             <input
-              className="border rounded p-2 w-full  font-Pretendard"
+              className="border rounded p-2 w-full font-Pretendard"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
