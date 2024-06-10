@@ -136,7 +136,7 @@ export default function Home() {
     setMessages([
       {
         role: "model",
-        parts: [{ text: "안녕하세요? 여행전문가 코드트래블입니다. 어떤 여행을 원하세요?" }],
+        parts: [{ text: "안녕하세요?\n여행전문가 코드트래블입니다.\n어떤 여행을 원하시나요?" }],
       },
     ]);
   };
