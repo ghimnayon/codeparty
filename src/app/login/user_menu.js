@@ -156,7 +156,7 @@ export const UserMenu = () => {
               {scheduleItem.title}
             </div>
             {selectedSchedule?.id === scheduleItem.id && (
-              <div className="absolute top-[-190px] right-full mr-10 ml-2 p-4 bg-white shadow-lg z-10" style={{ width:'500px', padding: '10px', maxHeight: '420px', overflowY: 'auto'}}> {/* 팝오버 창 위치 수정 */}
+              <div className="absolute top-[-100px] right-full mr- ml-2 p-4 bg-white shadow-lg z-10" style={{ width:'600px', padding: '10px', maxHeight: '420px', overflowY: 'auto'}}> {/* 팝오버 창 위치 수정 */}
                 {/* <h2>{scheduleItem.title}</h2> */}
                 <div>{formatScheduleDetails(scheduleItem.schedule)}</div>
                 <div className="flex justify-end p-4"> {/* 버튼을 오른쪽 끝으로 정렬 */}
