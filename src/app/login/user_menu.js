@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useSchedule } from "@/components/schedule/ScheduleContext";
 import { db } from "@/firebase";
-import { collection, query, getDocs, addDoc, orderBy, where, onSnapshot } from "firebase/firestore";
+import { collection, query, getDocs, addDoc, deleteDoc, doc, orderBy, where, onSnapshot } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 
-const scheduleCollection = collection(db, "todos");
+const scheduleCollection = collection(db, "schedules");
 
 const formatScheduleDetails = (schedule) => {
   const days = schedule.reduce((acc, item) => {
@@ -48,14 +48,14 @@ export const UserMenu = () => {
   const { schedule } = useSchedule();
   const [isTitleModalOpen, setIsTitleModalOpen] = useState(false);
 
-  const { data, status } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (status === "authenticated" && data?.user?.name) {
+    if (status === "authenticated" && session?.user?.name) {
       const q = query(
         collection(db, "schedules"),
-        where("userName", "==", data.user.name),
-        orderBy("created")
+        where("userName", "==", session.user.name),
+        orderBy("created", "desc")
       );
 
       const fetchSchedules = async () => {
@@ -83,7 +83,7 @@ export const UserMenu = () => {
 
       return () => unsubscribe();
     }
-  }, [status, data]);
+  }, [status, session]);
 
   const handleSelectSchedule = (item) => {
     if (selectedSchedule?.id === item.id) {
@@ -94,7 +94,7 @@ export const UserMenu = () => {
   };
 
   const handleSave = async () => {
-    if (!data?.user?.name) {
+    if (status !== "authenticated" || !session?.user?.name) {
       alert("로그인이 필요합니다.");
       return;
     }
@@ -105,13 +105,13 @@ export const UserMenu = () => {
 
     try {
       const newSchedule = {
-        userName: data.user.name,
+        userName: session.user.name,
         title,
         created: new Date(),
         schedule
       };
 
-      await addDoc(collection(db, "schedules"), newSchedule);
+      await addDoc(scheduleCollection, newSchedule);
       setTitle(""); // Clear the input after saving
       setIsTitleModalOpen(false); // Close the title input modal
     } catch (error) {
@@ -119,8 +119,22 @@ export const UserMenu = () => {
     }
   };
 
+  const handleDelete = async (scheduleId) => {
+    if (confirm("정말로 이 일정을 삭제하시겠습니까?")) {
+      try {
+        await deleteDoc(doc(db, "schedules", scheduleId));
+        setSchedules(schedules.filter(schedule => schedule.id !== scheduleId));
+        if (selectedSchedule?.id === scheduleId) {
+          setSelectedSchedule(null);
+        }
+      } catch (error) {
+        console.error("Error deleting schedule: ", error);
+      }
+    }
+  };
+
   return (
-    <div className="flex flex-col w-55 font-pretendard">
+    <div className="flex flex-col w-55 font-Pretendard">
       <div className="mt-2">
         <Button className="w-full bg-blue-500 text-white p-2 rounded-full" onClick={() => setIsTitleModalOpen(true)}>
           일정 저장하기
@@ -142,13 +156,19 @@ export const UserMenu = () => {
               <div className="absolute top-full left-0 mt-2 p-4 bg-white shadow-lg w-full z-10">
                 <h2>{scheduleItem.title}</h2>
                 <div>{formatScheduleDetails(scheduleItem.schedule)}</div>
+                <Button
+                  className="mt-4 bg-red-500 text-white p-2 rounded"
+                  onClick={() => handleDelete(scheduleItem.id)}
+                >
+                  일정 삭제하기
+                </Button>
               </div>
             )}
           </li>
         ))}
       </ul>
       {isTitleModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 font-pretendard">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 font-Pretendard">
           <div className="bg-white p-4 rounded shadow-lg">
             <h2 className="mb-4 font-semibold">일정 제목 입력</h2>
             <input
