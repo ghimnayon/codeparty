@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useSchedule } from "@/components/schedule/ScheduleContext";
@@ -51,6 +49,7 @@ export const UserMenu = () => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
+    console.log("UserMenu - session:", session); // 로그 추가
     if (status === "authenticated" && session?.user?.name) {
       const q = query(
         collection(db, "schedules"),
@@ -140,7 +139,7 @@ export const UserMenu = () => {
           일정 저장하기
         </Button>
       </div>
-      <div className="w-full bg-gray-200 rounded-full text-center mt-6 font-medium">내 일정</div>
+      <div className="w-full bg-gray-200 rounded-full text-center mt-6 font-light">내 일정</div>
       <ul className="mt-4 relative">
         {schedules.map((scheduleItem) => (
           <li key={scheduleItem.id} className="relative">
@@ -179,10 +178,10 @@ export const UserMenu = () => {
               placeholder="일정의 제목을 입력하세요"
             />
             <div className="flex justify-end mt-4">
-              <Button variant="destructive" className="mr-2" onClick={() => setIsTitleModalOpen(false)}>
+              <Button className="mr-2" onClick={() => setIsTitleModalOpen(false)}>
                 취소
               </Button>
-              <Button onClick={handleSave} className = 'hover:bg-green-500'>저장</Button>
+              <Button onClick={handleSave}>저장</Button>
             </div>
           </div>
         </div>

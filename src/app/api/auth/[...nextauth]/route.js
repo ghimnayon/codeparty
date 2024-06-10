@@ -23,6 +23,7 @@ const handler = NextAuth({
       if (account && profile) {
         token.name = profile.properties?.nickname;
         token.profileImage = profile.properties?.profile_image;
+        console.log("JWT Callback - token:", token); // 로그 추가
       }
       return token;
     },
@@ -33,6 +34,7 @@ const handler = NextAuth({
           name: token.name,
           profileImage: token.profileImage,
         };
+        console.log("Session Callback - session.user:", session.user); // 로그 추가
       }
       return session;
     },
