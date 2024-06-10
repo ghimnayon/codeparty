@@ -4,6 +4,7 @@ import { useSchedule } from "@/components/schedule/ScheduleContext";
 import { db } from "@/firebase";
 import { collection, query, getDocs, addDoc, deleteDoc, doc, orderBy, where, onSnapshot } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
+import { FaListUl } from "react-icons/fa"; // 리스트 아이콘을 가져오기 위해 추가
 
 const scheduleCollection = collection(db, "schedules");
 
@@ -134,17 +135,20 @@ export const UserMenu = () => {
 
   return (
     <div className="flex flex-col w-55 font-Pretendard">
-      <div className="mt-2">
-        <Button className="w-full bg-blue-500 text-white p-2 rounded-full" onClick={() => setIsTitleModalOpen(true)}>
+      <div className="mt-2 ">
+        <Button className="w-full bg-blue-500 text-white p-2 rounded-full font-Pretendard" onClick={() => setIsTitleModalOpen(true)}>
           일정 저장하기
         </Button>
       </div>
-      <div className="w-full bg-gray-200 rounded-full text-center mt-6 font-light">내 일정</div>
-      <ul className="mt-4 relative">
+      <div className="flex items-center justify-center w-full rounded-full text-center mt-8 font-medium text-sm text-black bg-gray-200" style={{height:'30px'}}>
+        <FaListUl className="inline-block text-xs mr-2 text-black font-Pretendard" /> {/* 아이콘 크기 작게 및 우측에 텍스트 추가 */}
+         내 일정
+      </div>
+      <ul className="mt-2 relative">
         {schedules.map((scheduleItem) => (
           <li key={scheduleItem.id} className="relative">
             <div
-              className={`cursor-pointer p-2 text-center font-semibold border rounded-full ${
+              className={`cursor-pointer mb-2 p-2 text-center font-semibold font-Pretendard border rounded-full ${
                 selectedSchedule?.id === scheduleItem.id ? "bg-green-500 text-white" : "bg-white text-black"
               } hover:bg-green-500 hover:text-white`}
               onClick={() => handleSelectSchedule(scheduleItem)}
@@ -152,15 +156,17 @@ export const UserMenu = () => {
               {scheduleItem.title}
             </div>
             {selectedSchedule?.id === scheduleItem.id && (
-              <div className="absolute top-full left-0 mt-2 p-4 bg-white shadow-lg w-full z-10">
-                <h2>{scheduleItem.title}</h2>
+              <div className="absolute top-[-190px] right-full mr-10 ml-2 p-4 bg-white shadow-lg z-10" style={{ width:'500px', padding: '10px', maxHeight: '420px', overflowY: 'auto'}}> {/* 팝오버 창 위치 수정 */}
+                {/* <h2>{scheduleItem.title}</h2> */}
                 <div>{formatScheduleDetails(scheduleItem.schedule)}</div>
+                <div className="flex justify-end p-4"> {/* 버튼을 오른쪽 끝으로 정렬 */}
                 <Button
-                  className="mt-4 bg-red-500 text-white p-2 rounded"
+                  className="flex justify-end bg-red-500 text-white p-2 rounded"
                   onClick={() => handleDelete(scheduleItem.id)}
                 >
-                  일정 삭제하기
+                  일정 삭제
                 </Button>
+              </div>
               </div>
             )}
           </li>
