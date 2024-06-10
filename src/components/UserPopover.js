@@ -1,22 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { signIn, signOut } from 'next-auth/react';
-
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { UserMenu } from "@/app/login/user_menu";
 
-const UserPopover = ({ session, toggleUserMenu, showUserMenu }) => {
+const UserPopover = () => {
+  const { data: session } = useSession();
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const toggleUserMenu = () => {
+    setShowUserMenu(prev => !prev);
+  };
+
   useEffect(() => {
-    // showUserMenu 상태가 변경될 때마다 리렌더링
+    // Session 상태가 변경될 때마다 콘솔에 출력
     console.log('Session:', session);
-  }, [showUserMenu]);
+  }, [session]);
 
   return (
     <div className="p-5 mt-2 flex mr-4 font-pretendard">
-        <div className="flex justify-end w-4/5 mr-5 mt-4 p-1 text-l font-pretendard font-light text-black">
-            {/* AI와 함께 여행 일정 짜기 */}
-        </div>
-      <Popover>
+      <div className="flex justify-end w-4/5 mr-5 mt-4 p-1 text-l font-pretendard font-light text-black">
+        {/* AI와 함께 여행 일정 짜기 */}
+      </div>
+      <Popover open={showUserMenu} onOpenChange={setShowUserMenu}>
         <PopoverTrigger asChild>
           <Button
             className="flex items-center bg-gray-200 border p-1 rounded-full" 
@@ -43,16 +49,14 @@ const UserPopover = ({ session, toggleUserMenu, showUserMenu }) => {
             </div>
           </Button>
         </PopoverTrigger>
-        {showUserMenu && (
-          <PopoverContent align="end" className="w-60 bg-white p-6 shadow-lg">
-            <Button className="w-full bg-gray-500 text-white rounded-full" onClick={() => signOut()}>
-              로그아웃
-            </Button>
-            <div className="mt-2">
-              <UserMenu />
-            </div>
-          </PopoverContent>
-        )}
+        <PopoverContent align="end" className="w-60 bg-white p-6 shadow-lg">
+          <Button className="w-full bg-gray-500 text-white rounded-full" onClick={() => signOut()}>
+            로그아웃
+          </Button>
+          <div className="mt-2">
+            <UserMenu />
+          </div>
+        </PopoverContent>
       </Popover>
     </div>
   );
