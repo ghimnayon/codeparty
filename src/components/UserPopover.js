@@ -50,12 +50,12 @@ const UserPopover = () => {
           </Button>
         </PopoverTrigger>
         <PopoverContent align="end" className="w-60 bg-white p-6 shadow-lg">
-          <Button className="w-full bg-gray-500 text-white rounded-full" onClick={() => signOut()}>
-            로그아웃
-          </Button>
-          <div className="mt-2">
+          <div className="mt-0">
             <UserMenu />
           </div>
+          <Button className="w-full bg-gray-500 text-white rounded-full mt-4" onClick={() => signOut()}>
+            로그아웃
+          </Button>
         </PopoverContent>
       </Popover>
     </div>

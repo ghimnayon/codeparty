@@ -135,14 +135,14 @@ export const UserMenu = () => {
 
   return (
     <div className="flex flex-col w-55 font-Pretendard">
-      <div className="mt-2 ">
+      <div className="mt-0">
         <Button className="w-full bg-blue-500 text-white p-2 rounded-full font-Pretendard" onClick={() => setIsTitleModalOpen(true)}>
           일정 저장하기
         </Button>
       </div>
-      <div className="flex items-center justify-center w-full rounded-full text-center mt-8 font-medium text-sm text-black bg-gray-200" style={{height:'30px'}}>
+      <div className="flex items-center justify-center w-full rounded-full text-center mt-2 font-medium text-sm text-black bg-gray-200" style={{height:'30px'}}>
         <FaListUl className="inline-block text-xs mr-2 text-black font-Pretendard" /> {/* 아이콘 크기 작게 및 우측에 텍스트 추가 */}
-         내 일정
+          내 일정
       </div>
       <ul className="mt-2 relative">
         {schedules.map((scheduleItem) => (
@@ -174,20 +174,20 @@ export const UserMenu = () => {
       </ul>
       {isTitleModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 font-Pretendard">
-          <div className="bg-white p-4 rounded shadow-lg">
-            <h2 className="mb-4 font-semibold">일정 제목 입력</h2>
+          <div className="bg-white p-4 rounded shadow-lg mr-5 ml-5">
+            <h2 className="mb-4 font-semibold text-m font-Pretendard">일정 제목 입력</h2>
             <input
-              className="border p-2 w-full"
+              className="border rounded p-2 w-full  font-Pretendard"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="일정의 제목을 입력하세요"
+              placeholder="제목을 입력하세요"
             />
             <div className="flex justify-end mt-4">
-            <Button variant="destructive" className="mr-2" onClick={() => setIsTitleModalOpen(false)}>
+            <Button variant="destructive" className="mr-2 font-Pretendard" onClick={() => setIsTitleModalOpen(false)}>
                 취소
               </Button>
-              <Button onClick={handleSave} className = 'hover:bg-green-500'>저장</Button>
+              <Button onClick={handleSave} className = 'font-Pretendard hover:bg-green-500'>저장</Button>
             </div>
           </div>
         </div>
