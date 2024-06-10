@@ -94,6 +94,10 @@ export const UserMenu = () => {
   };
 
   const handleSave = async () => {
+    if (status !== "authenticated" || !session?.user?.name) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
     if (!title.trim()) {
       alert("Title is required");
       return;
