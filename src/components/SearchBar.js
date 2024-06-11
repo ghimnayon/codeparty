@@ -111,7 +111,7 @@ const SearchBar = ({ onSearch }) => {
           />
         </div>
 
-        <HeadlessPopover className="relative w-12 font-medium">
+        <HeadlessPopover className="relative w-32 font-medium">
           <HeadlessPopover.Button ref={checkInRef} className="flex items-center space-x-2">
             <CalendarIcon className="h-5 w-5 text-gray-500 font-pretendard" />
             <span>{startDate ? startDate.toLocaleDateString() : '체크인'}</span>
@@ -138,7 +138,7 @@ const SearchBar = ({ onSearch }) => {
         </HeadlessPopover>
 
         <button
-          className="flex items-center w-12 space-x-2 ml-4 font-medium"
+          className="flex items-center w-32 space-x-2 ml-4 font-medium"
           onClick={handleCheckOutClick}
         >
           <CalendarIcon className="h-5 w-5 text-gray-500" />
