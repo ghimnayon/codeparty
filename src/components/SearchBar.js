@@ -99,7 +99,7 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <div className="w-full flex-col items-center font-pretendard">
-      <div className="flex justify-between items-center border rounded-full p-4 shadow-md mx-auto bg-white font-medium" style={{ width: '720px', height: '60px' }}>
+      <div className="flex w-3/4 h-[60px] justify-between items-center border rounded-full p-4 shadow-md mx-auto bg-white font-medium ">
         <div className="flex items-center space-x-2">
           <LocationMarkerIcon className="h-5 w-5 text-gray-500" />
           <input
