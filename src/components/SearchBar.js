@@ -85,8 +85,8 @@ const SearchBar = ({ onSearch }) => {
         `인원: ${guests}명\n` +
         `예산: ${budget}만원\n` +
         `식사 횟수: ${meals.join(', ')}\n` +
-        `여행강도: ${intensity}이고, 여행강도는 1이 가장 강도가 낮은 여행이고 3이 가장 높은 여행이야\n` +
-        `1일 도보 이동거리: ${walkingDistance}`;
+        `여행강도: ${intensity}\n` +
+        `1일 도보 이동거리: ${walkingDistance} 이하`;
     } else {
       prompt = `다음 내용을 바탕으로 여행 일정을 만들어 줘:\n` +
         `위치: ${location}\n` +
